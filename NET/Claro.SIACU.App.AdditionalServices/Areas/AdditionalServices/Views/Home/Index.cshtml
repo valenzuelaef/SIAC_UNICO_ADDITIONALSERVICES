@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<div class="container-fluid" id="divIndex">
+    <div class="row">
+        <div id="divCustomerDataView" class="col-md-3 column-layout"></div>
+        <div id="containerAdditionalServices">
+            <div class="col-md-9 column-layout remove-padding">
+                <div class="sumary-decos">
+                    <div class="transaction-container-step">
+                        <div class="transaction-process-step">
+                            <div class="process-row-step nav nav-tabs">                       
+                            </div>
+                        </div>
+                        <div class="transaction-progress-Steps">
+                            <div class="transaction-process transaction-bar-step">
+                                <div id="prog" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="transactionContent" class="tab-content"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Areas/AdditionalServices/Scripts/Index.js"></script>
+@Scripts.Render("~/bundles/Content/Lib/BloqueoF12")

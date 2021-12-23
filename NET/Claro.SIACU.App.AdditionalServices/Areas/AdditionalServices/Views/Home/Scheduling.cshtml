@@ -1,0 +1,63 @@
+﻿<div class="col-md-12 column-layout" style="padding: 0">
+    <div class="col-md-12 column-layout">
+        <div class="container-fluid middle-container">
+            <div class="row">
+                <div class="bg-container">
+                    <div class="customer-data-title">
+                        <div class="customer-data-title-items customer-data-title-icon">
+                            <span class="additional_info-icon"></span>
+                        </div>
+                        <div class="customer-data-title-items customer-data-title-label">
+                            <span style="font-weight:bold">DATOS ADICIONALES</span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="company" class="label-cp">Enviar por e-mail:</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" id="chkEmail" style="vertical-align:middle" class="style-checkbox" checked aria-label="...">
+                                            <label for="chkEmail" style="vertical-align:middle" class="inline-label "></label>
+                                        </span>
+                                        <input id="txtEmail" type="text" class="form-control inputs-cp" value="" aria-label="...">
+                                    </div>
+
+                                    <p id="ErrorMessageEmail" class="alert-danger alert-message"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="company" class="label-cp">Teléfono de Referencia. (Opcional)</label>
+                                    <input type="text" id="txtReferencePhone" class="form-control inputs-cp" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="company" class="label-cp">Punto de Atención</label>
+                                    <select id="ddlCenterofAttention" class="form-control inputs-cp">  </select>
+                                    <p id="ErrorMessageddlCenterofAttention" class="alert-danger alert-message"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">&nbsp;</div>
+                            <div class="col-md-4">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="company" class="label-cp">Notas.</label>
+                                    <textarea id="txtNote" class="form-control inputs-cp" rows="5" style="resize:none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Content/Lib/BloqueoF12")

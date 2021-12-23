@@ -1,0 +1,102 @@
+﻿<div class="bg-container-summary col-md-12 column-layout" id="DivScheduling">
+    <div class="customer-data-title box">
+        <div class="customer-data-title-items customer-data-title-icon">
+            <span class="summary-icon"></span>
+        </div>
+        <div class="customer-data-title-items customer-data-title-label">
+            <span style="font-weight:bold">RESUMEN</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li role="presentation" class="nav-tabs active">
+                    <a href="#benefits" aria-controls="benefits" role="tab" data-toggle="tab">
+                        <div class="customer-data-title box">
+                            <div class="customer-data-title-items customer-data-title-icon">
+                                <span class="detailed-icon"></span>
+                            </div>
+                            <div class="customer-data-title-items customer-data-title-label">
+                                <span style="color:gray">DETALLADO</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li role="presentation" class="nav-tabs">
+                    <a href="#speechone" aria-controls="speechone" role="tab" data-toggle="tab">
+                        <div class="customer-data-title box">
+                            <div class="customer-data-title-items customer-data-title-icon">
+                                <span class="speech-icon"></span>
+                            </div>
+                            <div class="customer-data-title-items customer-data-title-label">
+                                <span style="color:gray">COMENTARIOS</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="benefits">
+                    <div id="divContenServicesAdd">
+                    <div class="col-sm-12 customer-data-title box" style="padding-top: 15px; padding-bottom: 15px">
+                        <div style="font-family: Roboto; font-style: normal; font-weight: bold; font-size: 15px; line-height: 18px">
+                            <span>ACTIVACIÓN DE SERVICIOS ADICIONALES</span>
+                        </div>
+                    </div>
+
+                        <div id="resumeServicesActivados" class="plan-resume col-sm-10 col-sm-offset-1">
+
+                        </div>
+                    </div>
+                    <div id="divContenServicesRemove">
+                    <div class="col-sm-12 customer-data-title box" style="padding-top: 15px; padding-bottom: 15px">
+                        <div style="font-family: Roboto; font-style: normal; font-weight: bold; font-size: 15px; line-height: 18px">
+                            <span>DESACTIVACIÓN DE SERVICIOS ADICIONALES</span>
+                        </div>
+                    </div>
+
+                        <div id="resumeServicesDesactivados" class="plan-resume col-sm-10 col-sm-offset-1" style="background-color: transparent; border: 2px solid #f51538;">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" style="margin-top: 30px" id="resumeContent">  
+                        <b>------------------------------------------------------------------- SERVICIOS ACTIVADOS --------------------------------------------------</b><br />
+                        <br />
+                        @*<span class="summary">INTERNET | puerto 25 | Costo S/. 175.00</span> <br />
+                        <span class="summary">TELEFONIA | 200 Min Multidestino | Costo S/. 16.00</span> <br />
+                        <span class="summary">CABLE | Paquete Fox Premium | Costo S/. 15.00</span> <br />
+                        <br />
+                        <b>Fecha de Programación: </b> <span class="summary">S/. 10.00</span> <br />
+                        <b>Cargo Fijo Actual: </b> <span class="summary">S/. 100.00</span> <br />
+                        <b>Cargo Fijo Promocional:</b> <span class="summary"> S/. 155.00</span> <br />
+                        <b>Nuevo Cargo Fijo:  </b> <span class="summary">S/. 180.00</span> <br />
+                        <b>Siguiente Recibo:  </b> <span class="summary">S/. 200.00</span> <br />
+                        <br />
+                        <b>------------------------------------------------------------------- SERVICIOS DESACTIVADOS -----------------------------------------------</b><br />
+                        <br />
+                            <span class="summary">TELEFONIA | 100 Min Multidestino | Costo S/. 15.00</span> <br />*@
+                        
+                    </div>
+                    <div class="col-md-12 text-center">
+                    <button id="btnCopy" name="bntCopy" class="btn btn-style btn-sm">Copiar</button>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="speechone">
+                    <br />
+
+                    Sr. ó Sra. <b>XXXXX</b>, durante XX meses, se estará brindando el descuento de <b>S/. XXXX</b> por el alquiler del <b>paquete XXX.</b><br />
+                    <br />
+                    Asimismo, mencionarle que en el siguinte recibo se estará cobrando el proporcional más el cobro del mes del <br />
+                    paquete contratado que será el monto de <b>S/. XXXX.</b><br />
+                    <br />
+                    Después de la promoción, percibirá un cobro adicional de <b>S/. XXXX</b> correspondiente al <b>paquete XXXX.</></b><br />
+                    <br />
+                    <span>*Recordarle que el paquete se estara activando en las proximas horas.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Content/Lib/BloqueoF12")

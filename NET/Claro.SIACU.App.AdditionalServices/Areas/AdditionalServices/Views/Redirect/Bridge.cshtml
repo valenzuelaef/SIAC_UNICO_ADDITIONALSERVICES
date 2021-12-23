@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Bridge";
+    Layout = "~/Areas/AdditionalServices/Views/Shared/_Layout.cshtml";
+}
+
+<div id="dRedirectContent" data-sequence="@ViewBag.sequence"></div>
+@*@System.Web.Optimization.Scripts.Render("~/bundles/AdditionalServices/Redirect")*@
+<!--Cargando-->
+@*<div id="myModalLoad" style="display:none;">
+    <span>
+        <img src="@Url.Content("~/Content/images/SUFija/loading_Claro.gif")" width="25" height="25" />  Cargando ....
+    </span>
+</div>*@
+
+@*<script>
+    $(document).ajaxStop(function () {
+        $.unblockUI();
+    });
+
+    $(document).ajaxStart(function () {
+        $.blockUI({
+            message: $("#myModalLoad"),
+            css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            }
+        });
+    });
+</script>*@
+
+@Scripts.Render("~/bundles/Content/Lib/BloqueoF12")
+@System.Web.Optimization.Scripts.Render("~/bundles/AdditionalServices/Redirect")
+
