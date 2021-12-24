@@ -285,7 +285,8 @@
                         that.transactionData.Data.FixPlanesServCapanas = that.transactionData.Data.FixPlanesServCapanas
 																		.filter(function (item) {
 																		    return item.ServiceType != 'ALQUILER EQUIPOS IPTV' &&
-                                                                                 item.ServiceType != 'ALQUILER EQUIPOS'
+                                                                                 item.ServiceType != 'ALQUILER EQUIPOS' &&
+                                                                                 item.poType != 'CARACTERISTICA'
 																		});
                         debugger;
                         $.each(that.transactionData.Data.FixPlanesServCapanas, function (idx, service) {
@@ -721,7 +722,7 @@
             }
                             }
             }
-
+			debugger;
             if (!$.array.isEmptyOrNull(that.transactionData.Data.ValidarTransaccion)) {
                 if (that.transactionData.Data.ValidarTransaccion.Codigo == "-3") {
                     alert(that.transactionData.Data.ValidarTransaccion.Mensaje, 'Alerta', function () {

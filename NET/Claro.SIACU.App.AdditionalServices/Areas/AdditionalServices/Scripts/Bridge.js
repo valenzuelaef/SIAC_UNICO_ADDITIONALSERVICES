@@ -51,9 +51,14 @@
                         var Availability = data.response.strAvailability;
                         var jsonParameters = data.response.strParameters;
                         var node = data.response.strNode;
-                        var objparameters = JSON.stringify(jsonParameters);
+                        //var objparameters = jsonParameters;
+                        //var regex = new RegExp("\'", "g");
+                        //var strData = objparameters.replace(regex, '"');
+                        //Session = JSON.parse(strData);
 
+                        var objparameters = JSON.stringify(jsonParameters);
                         Session = JSON.parse(JSON.parse(objparameters));
+
                         Session.UrlParams.IdTransaction = data.audit.Transaction;
 
                         $("#spnNode").text(node);
