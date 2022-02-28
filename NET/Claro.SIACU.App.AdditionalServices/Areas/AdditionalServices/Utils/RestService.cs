@@ -32,7 +32,7 @@ namespace Claro.SIACU.App.AdditionalServices.Areas.AdditionalServices.Utils
             request.Method = "POST";
             request.Headers = GetHeaders(paramHeaderOsb(Audit));
             request.Accept = "application/json";
-            request.Timeout = 900000; //Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["strTimeOut"]);
+            request.Timeout = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["strTimeOutTransactionsReing"]);
             JavaScriptSerializer Serializer = new JavaScriptSerializer();
             string data = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
             byte[] byteArray = Encoding.UTF8.GetBytes(data);

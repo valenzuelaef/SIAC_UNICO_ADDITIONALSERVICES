@@ -370,6 +370,7 @@ namespace Claro.SIACU.App.AdditionalServices.Areas.AdditionalServices.Controller
             var msg = "";
             try
             {
+                databytesFile = null;
                 Tools.Traces.Logging.Info(stridSession, oDataRequest.Audit.Transaction, "Url: " + strUrl); 
                 Tools.Traces.Logging.Info(stridSession, oDataRequest.Audit.Transaction, "Request postGeneraTransaccion DP PostServiciosAdicionales: " + JsonConvert.SerializeObject(oDataRequest));
                 oDataResponse = Utils.RestService.PostInvoque<Models.Transversal.GuardarDatosResponse>(strUrl, oDataRequest.Audit, oDataRequest, true);
@@ -378,7 +379,6 @@ namespace Claro.SIACU.App.AdditionalServices.Areas.AdditionalServices.Controller
                 /***********************INICIO DE CONTROL DE CONSTANCIA*******************************************************/
                     if ((oDataResponse != null) && (oDataResponse.MessageResponse != null) && (oDataResponse.MessageResponse.Body != null) ){
                         databytesFile = Convert.FromBase64String((oDataResponse.MessageResponse.Body.constancia != null ? oDataResponse.MessageResponse.Body.constancia : ""));
-                oDataResponse.MessageResponse.Body.constancia = "";
                     }
                 /**************************FIN DE CONTROL DE CONSTANCIA****************************************************************/
                 ok = true;

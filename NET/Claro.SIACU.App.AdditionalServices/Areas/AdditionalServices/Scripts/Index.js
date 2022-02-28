@@ -1,21 +1,21 @@
 ﻿(function ($, undefined) {
 
-     'use strict';
-     
-     var Form = function ($element, options) {
-          
+    'use strict';
+
+    var Form = function ($element, options) {
+
         $.extend(this, $.fn.AdditionalServices.defaults, $element.data(), typeof options === 'object' && options);
-  
-       
+
+
 
         this.setControls({
             form: $element,
 
-         
+
             tblProductTable: $('#tblCustomerAssociateEquiment', $element),
             tblProductsSummary: $('#tblCustomerEquipmentSummary', $element),
             stepsContainer: $('.process-row-step', $element),
-           
+
             btnStep: $('.next-step'),
             btnPrevStep: $('.prev-step'),
             divCustomerInformation: $('#divCustomerDataView', $element),
@@ -32,7 +32,7 @@
             var that = this,
                 controls = this.getControls();
 
-          
+
             that.render();
         },
 
@@ -41,7 +41,7 @@
                 controls = this.getControls();
 
             moment.locale('es');
-            //that.getLoadingPage();
+            that.timer();
             that.transactionStart();
         },
 
@@ -92,62 +92,62 @@
             Promise.all([customerInformationPromise, initialConfigurationPromise])
                 .then(function (res) {
 
-                var initialConfiguration = res[1].oInitialDataResponse.MessageResponse.Body,
-                       // AdditionalFixedData = res[1].oDatosAdiPaso01.MessageResponse.Body,
-                        AdditionalFixedData = res[1].oDatosAdi.MessageResponse.Body,
-                    AuditRequest = res[1].oAuditRequest,
-                       // fixPlanesCoreService = res[1].fixPlanesCoreService,
-                    Configuraciones = res[1].oConfiguraciones,
-                    AdditionalServices = initialConfiguration.AdditionalServices || {},
-                    CoreServices = initialConfiguration.CoreServices || {},
-                    CustomerInformation = initialConfiguration.CustomerInformation || {},
-                    Igv = initialConfiguration.Igv,
-                    PuntoAtencion = initialConfiguration.PuntoAtencion || {},
-                    DatosUsuarioCtaRed = initialConfiguration.obtenerDatosUsuarioCuentaRed || {},
-                    OficinaVentaUsuario = initialConfiguration.obtenerOficinaVentaUsuario || {},
-                    Tipificacion = AdditionalFixedData.servicios.tipificacionreglas_obtenerInformacionTipificacion || {},
-                    Instalacion = AdditionalFixedData.servicios.datosinstalacioncliente_obtenerDatosInstalacion || {},
-                    Configuration = AdditionalFixedData.servicios.configuracionesfija_obtenerConfiguraciones || {},
+                    var initialConfiguration = res[1].oInitialDataResponse.MessageResponse.Body,
+                           // AdditionalFixedData = res[1].oDatosAdiPaso01.MessageResponse.Body,
+                            AdditionalFixedData = res[1].oDatosAdi.MessageResponse.Body,
+                        AuditRequest = res[1].oAuditRequest,
+                           // fixPlanesCoreService = res[1].fixPlanesCoreService,
+                        Configuraciones = res[1].oConfiguraciones,
+                        AdditionalServices = initialConfiguration.AdditionalServices || {},
+                        CoreServices = initialConfiguration.CoreServices || {},
+                        CustomerInformation = initialConfiguration.CustomerInformation || {},
+                        Igv = initialConfiguration.Igv,
+                        PuntoAtencion = initialConfiguration.PuntoAtencion || {},
+                        DatosUsuarioCtaRed = initialConfiguration.obtenerDatosUsuarioCuentaRed || {},
+                        OficinaVentaUsuario = initialConfiguration.obtenerOficinaVentaUsuario || {},
+                        Tipificacion = AdditionalFixedData.servicios.tipificacionreglas_obtenerInformacionTipificacion || {},
+                        Instalacion = AdditionalFixedData.servicios.datosinstalacioncliente_obtenerDatosInstalacion || {},
+                        Configuration = AdditionalFixedData.servicios.configuracionesfija_obtenerConfiguraciones || {},
 
-                    ValidarTransaccion = AdditionalFixedData.servicios.consultatransaccionfija_validarTransaccion || {},
+                        ValidarTransaccion = AdditionalFixedData.servicios.consultatransaccionfija_validarTransaccion || {},
 
-                    AuditRequest = AuditRequest || {};
-                that.transactionData.Data = {};
+                        AuditRequest = AuditRequest || {};
+                    that.transactionData.Data = {};
                     that.transactionData.Data.idTransactionFront = idTransactionFront;
                     that.transactionData.Data.plataformaAT = plataformaAT;
-                that.transactionData.Data.AdditionalServices = (AdditionalServices.CodeResponse == '0') ? AdditionalServices.AdditionalServiceList : [];
-                that.transactionData.Data.AdditionalEquipment = (AdditionalServices.CodeResponse == '0') ? AdditionalServices.AdditionalEquipmentList : [];
-                that.transactionData.Data.CoreServices = (CoreServices.CodeResponse == '0') ? CoreServices.ServiceList : [];
-                that.transactionData.Data.CustomerInformation = (CustomerInformation.CodeResponse == '0') ? CustomerInformation.CustomerList[0] : [];
-                that.transactionData.Data.ListIgv = (Igv.CodeResponse == '0') ? Igv.listaIGV : [];
-                that.transactionData.Data.Configuration = (Configuration.CodeResponse == '0') ? Configuration.ProductTransaction.ConfigurationAttributes : [];
-                that.transactionData.Data.PuntoAtencion = (PuntoAtencion.CodigoRespuesta == '0') ? PuntoAtencion.listaRegistros : [];
-                that.transactionData.Data.DatosUsuarioCtaRed = (DatosUsuarioCtaRed.CodigoRespuesta == '0') ? DatosUsuarioCtaRed.listaDatosUsuarioCtaRed : [];
-                that.transactionData.Data.OficinaVentaUsuario = (OficinaVentaUsuario.CodigoRespuesta == '0') ? OficinaVentaUsuario.listaOficinaVenta : [];
-                that.transactionData.Data.AuditRequest = AuditRequest;
+                    that.transactionData.Data.AdditionalServices = (AdditionalServices.CodeResponse == '0') ? AdditionalServices.AdditionalServiceList : [];
+                    that.transactionData.Data.AdditionalEquipment = (AdditionalServices.CodeResponse == '0') ? AdditionalServices.AdditionalEquipmentList : [];
+                    that.transactionData.Data.CoreServices = (CoreServices.CodeResponse == '0') ? CoreServices.ServiceList : [];
+                    that.transactionData.Data.CustomerInformation = (CustomerInformation.CodeResponse == '0') ? CustomerInformation.CustomerList[0] : [];
+                    that.transactionData.Data.ListIgv = (Igv.CodeResponse == '0') ? Igv.listaIGV : [];
+                    that.transactionData.Data.Configuration = (Configuration.CodeResponse == '0') ? Configuration.ProductTransaction.ConfigurationAttributes : [];
+                    that.transactionData.Data.PuntoAtencion = (PuntoAtencion.CodigoRespuesta == '0') ? PuntoAtencion.listaRegistros : [];
+                    that.transactionData.Data.DatosUsuarioCtaRed = (DatosUsuarioCtaRed.CodigoRespuesta == '0') ? DatosUsuarioCtaRed.listaDatosUsuarioCtaRed : [];
+                    that.transactionData.Data.OficinaVentaUsuario = (OficinaVentaUsuario.CodigoRespuesta == '0') ? OficinaVentaUsuario.listaOficinaVenta : [];
+                    that.transactionData.Data.AuditRequest = AuditRequest;
 
-                that.transactionData.Data.ValidarTransaccion = (ValidarTransaccion.ResponseAudit.CodigoRespuesta == '0') ? ValidarTransaccion.ResponseData : [];
+                    that.transactionData.Data.ValidarTransaccion = (ValidarTransaccion.ResponseAudit.CodigoRespuesta == '0') ? ValidarTransaccion.ResponseData : [];
                     //that.transactionData.Data.FixPlanesServCapanas = (fixPlanesCoreService.codigoRespuesta == '0') ? fixPlanesCoreService.ListPlanFijaServicio : [];
-                that.transactionData.Data.Instalacion = (Instalacion.codigoRespuesta == '0') ? Instalacion : [];
-                that.transactionData.Data.Tipificacion = (Tipificacion.CodigoRespuesta == '0') ? Tipificacion.listaTipificacionRegla : [];
-                that.transactionData.Configuration = {};
-                that.transactionData.Configuration.Constants = {};
-                that.transactionData.Configuration.Constants = Configuraciones;
+                    that.transactionData.Data.Instalacion = (Instalacion.codigoRespuesta == '0') ? Instalacion : [];
+                    that.transactionData.Data.Tipificacion = (Tipificacion.CodigoRespuesta == '0') ? Tipificacion.listaTipificacionRegla : [];
+                    that.transactionData.Configuration = {};
+                    that.transactionData.Configuration.Constants = {};
+                    that.transactionData.Configuration.Constants = Configuraciones;
                     that.transactionData.Configuration.Constants.Technology = CoreServices.Technology;
 
                     $.reusableBusiness.getIgv(that.transactionData.Data.ListIgv, function (igv) {
 
-                      that.transactionData.Data.Configuration.Constantes_Igv = igv
-                    // Load Customer Information - Left Panel
+                        that.transactionData.Data.Configuration.Constantes_Igv = igv
+                        // Load Customer Information - Left Panel
                         $.app.renderCustomerInformation(that.transactionData);
-                    // Load Core Service Information - Left Panel
+                        // Load Core Service Information - Left Panel
                         //debugger;
                         //if (!$.array.isEmptyOrNull(that.transactionData.Data.CoreServices))
                         $.app.renderCoreServices(that.transactionData);
-                    // Load Additional Service Information - Left Panel
+                        // Load Additional Service Information - Left Panel
                         //if (!$.array.isEmptyOrNull(that.transactionData.Data.AdditionalServices))
                         $.app.renderAdditionalServices(that.transactionData);
-                    // Load Additional Equipment Information - Left Panel
+                        // Load Additional Equipment Information - Left Panel
                         //if (!$.array.isEmptyOrNull(that.transactionData.Data.AdditionalEquipment))
                         $.app.renderAdditionalEquipment(that.transactionData);
 
@@ -166,60 +166,60 @@
                         that.transactionData.Configuration.Constants.Programacion_TipoTrabajoAlta = that.transactionData.Data.idTransactionFront == '5' ? that.transactionData.Configuration.Constants.Programacion_TipoTrabajoAlta : '1105';
                         that.transactionData.Configuration.Constants.Programacion_TipoTrabajoBaja = that.transactionData.Data.idTransactionFront == '5' ? that.transactionData.Configuration.Constants.Programacion_TipoTrabajoBaja : '1106';
                     }
- 
+
                     that.transactionData.Configuration.Constants.Plataforma_Facturador = that.transactionData.Data.idTransactionFront == '5' ? 'BSCS7' : 'CBIO';
                     //that.transactionData.Configuration.Constants.tip_servicio = that.TransferSession.Data.idTransactionFront == '5' ? '0061' : '0101';
                     /***FIN-Nuevas configuraciones***/
 
-                var attributes = that.transactionData.Data.Configuration;
-                that.transactionData.Configuration.Steps = attributes.filter(function (e) { return (e.AttributeName == 'step') });
-                that.transactionData.Configuration.Views = attributes.filter(function (e) { return (e.AttributeType == 'CONTENEDOR') });
-               
-                that.transactionData.Configuration.Constants.Technology = CoreServices.Technology;
+                    var attributes = that.transactionData.Data.Configuration;
+                    that.transactionData.Configuration.Steps = attributes.filter(function (e) { return (e.AttributeName == 'step') });
+                    that.transactionData.Configuration.Views = attributes.filter(function (e) { return (e.AttributeType == 'CONTENEDOR') });
+
+                    that.transactionData.Configuration.Constants.Technology = CoreServices.Technology;
                     that.transactionData.Configuration.Constants.planCode = CoreServices.planCode;
-                var
-                    viewsPromise = that.viewsRenderPromise(),
-                    stepsPromise = that.stepsRenderPromise(controls.stepsContainer);
+                    var
+                        viewsPromise = that.viewsRenderPromise(),
+                        stepsPromise = that.stepsRenderPromise(controls.stepsContainer);
 
-                Promise.all([viewsPromise, stepsPromise]) // Carga de las Vistas de la Transacción
-                    .then(function (renderResponse) {
+                    Promise.all([viewsPromise, stepsPromise]) // Carga de las Vistas de la Transacción
+                        .then(function (renderResponse) {
 
-                        controls = that.AsignControls(that, controls.form);
-                           /* $.reusableBusiness.LoadPointOfAttention(controls.ddlCenterofAttention, that.transactionData);
+                            controls = that.AsignControls(that, controls.form);
+                            /* $.reusableBusiness.LoadPointOfAttention(controls.ddlCenterofAttention, that.transactionData);
+ 
+                             that.loadAdditionalServicesData(that.transactionData.Data.FixPlanesServCapanas);*/
+                            controls.btnSave.addEvent(that, 'click', that.Save_click);
+                            controls.btnConstancy.addEvent(that, 'click', that.Constancy_Generate);
+                            controls.btnCopy.addEvent(that, 'click', $.app.copyToClipboard);
+                            controls.btnStep.addEvent(that, 'click', that.navigateTabs);
+                            controls.btnAdd.addEvent(that, 'click', that.btnAdd_click);
+                            controls.btnRemove.addEvent(that, 'click', that.btnRemove_click);
+                            controls.chPrograma.addEvent(that, 'click', that.chPrograma_click);
+                            controls.dvPrograma.hide();
+                            // Change Events
+                            controls.mailCheck.addEvent(that, 'click', that.onMailCheck);
+                            controls.mailText.addEvent(that, 'focusout', that.onFocusoutEmail);
+                            controls.txtCalendar.datepicker({ format: 'dd/mm/yyyy' });
+                            controls.ddlCenterofAttention.change(function () { that.ddlCenterofAttention_Click() });
+                            controls.ddlTimeZone.change(function () { that.ddlTimeZone_Click() });
+                            controls.txtReferencePhone.addEvent(that, 'keypress', that.onKeyPressLimit);
+                            controls.txtReferencePhone.addEvent(that, 'keyup paste', that.onPasteLimit);
+                            if (controls.mailText.length > 0) { controls.mailText.val(that.transactionData.Data.CustomerInformation.Email); }
 
-                            that.loadAdditionalServicesData(that.transactionData.Data.FixPlanesServCapanas);*/
-                        controls.btnSave.addEvent(that, 'click', that.Save_click);
-                        controls.btnConstancy.addEvent(that, 'click', that.Constancy_Generate);
-                        controls.btnCopy.addEvent(that, 'click', $.app.copyToClipboard);
-                        controls.btnStep.addEvent(that, 'click', that.navigateTabs);
-                        controls.btnAdd.addEvent(that, 'click', that.btnAdd_click);
-                        controls.btnRemove.addEvent(that, 'click', that.btnRemove_click);
-                        controls.chPrograma.addEvent(that, 'click', that.chPrograma_click);
-                        controls.dvPrograma.hide();
-                        // Change Events
-                         controls.mailCheck.addEvent(that, 'click', that.onMailCheck);
-                        controls.mailText.addEvent(that, 'focusout', that.onFocusoutEmail);
-                        controls.txtCalendar.datepicker({ format: 'dd/mm/yyyy' });
-                        controls.ddlCenterofAttention.change(function () { that.ddlCenterofAttention_Click() });
-                        controls.ddlTimeZone.change(function () { that.ddlTimeZone_Click() });
-                        controls.txtReferencePhone.addEvent(that, 'keypress', that.onKeyPressLimit);
-                        controls.txtReferencePhone.addEvent(that, 'keyup paste', that.onPasteLimit);
-                        if (controls.mailText.length > 0) { controls.mailText.val(that.transactionData.Data.CustomerInformation.Email); }
-
-                        $('#btnTareaProgramada').prop("disabled", true);
-                    }
-                    )
-                    .catch(function (e) {
-                        $.unblockUI();
-                        alert(string.format('Ocurrio un error al cargar la transacción - {0}', e));
-                        $('#navbar-body').showMessageErrorLoadingTransaction();
-                    })
-                    .then(function (renderResponse) {
+                            $('#btnTareaProgramada').prop("disabled", true);
+                        }
+                        )
+                        .catch(function (e) {
+                            $.unblockUI();
+                            alert(string.format('Ocurrio un error al cargar la transacción - {0}', e));
+                            $('#navbar-body').showMessageErrorLoadingTransaction();
+                        })
+                        .then(function (renderResponse) {
 
                             that.LoadProceso2();
 
-                        });            
-            }
+                        });
+                }
 
             )
                 .catch(function (e) {
@@ -229,7 +229,7 @@
                 })
                 .then(function () {
 
-                   // $.unblockUI();
+                    // $.unblockUI();
                 });
 
         },
@@ -255,7 +255,7 @@
                 url: '/AdditionalServices/Home/GetDatosAdicionales',
                 data: JSON.stringify(objLoadParameters),
                 success: function (response) {
-                    
+
                     that.transactionData.Current = {};
                     that.transactionData.Current.Plan = {};
                     that.transactionData.Current.ServicesCore = [];
@@ -295,7 +295,7 @@
                             that.transactionData.Data.FixPlanesServCapanas[idx].familia = service.familia == null ? "" : service.familia;
                             that.transactionData.Data.FixPlanesServCapanas[idx].FixedCharge = service.FixedCharge == null || service.FixedCharge == '' ? "0.00" : (parseFloat(service.FixedCharge) * parseFloat("1." + that.transactionData.Data.Configuration.Constantes_Igv)).toFixed(2);
                             that.transactionData.Data.FixPlanesServCapanas[idx].cargoFijoPromocion = service.cargoFijoPromocion == null || service.cargoFijoPromocion == '' ? "0.00" : parseFloat(service.cargoFijoPromocion).toFixed(2);
-                           
+
                         });
 
 
@@ -336,7 +336,7 @@
 
             controls.txtReferencePhone.val((tval).substring(0, 12));
 
-         
+
 
         },
 
@@ -345,14 +345,14 @@
               controls = this.getControls();
 
             var tval = controls.txtReferencePhone.val(),
-            tlength = tval.length, 
+            tlength = tval.length,
             set = 12,
             remain = parseInt(set - tlength);
-                 
-                if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {
-                    controls.txtReferencePhone.val((tval).substring(0, tlength - 1));
-                    return false;
-                }
+
+            if (remain <= 0 && e.which !== 0 && e.charCode !== 0) {
+                controls.txtReferencePhone.val((tval).substring(0, tlength - 1));
+                return false;
+            }
         },
         navigateTabs: function () {
 
@@ -388,11 +388,11 @@
 
         },
         /* PartialView SummaryPackage - Resumen */
-        
-        generarActualizacionServicios: function(filter1, filter2, opcion) {
+
+        generarActualizacionServicios: function (filter1, filter2, opcion) {
             var array1 = filter1;
             var array2 = filter2;
-            var that = this;""
+            var that = this; ""
             var tempArr = array2.filter(function (item) {
                 return array1.indexOf(item) == -1 ? true : false;//!array1.includes(item);
             });
@@ -423,9 +423,9 @@
                 that.lstServiciosDesactivarPreCarga = array1;   //Grilla Derecha
                 that.lstServiciosActivarPreCarga = tempArr2;// array2;      //Grilla Izquierda
             }
-         
 
-          
+
+
             //nuevoArray1 = array1;
             //nuevoArray2 = array2;
 
@@ -445,25 +445,25 @@
 
             content = ''
             separator = '<span class="text-line text-line-red  remove-padding">+</span>';
-             
+
             var ServiciosNuevos = [];
-             
+
             that.generarActualizacionServicios(that.lstEquipmentsToDisassociateInit, that.lstEquipmentsToAssociate2, true);
-                       
+
             that.lstServiciosDesactivar;
-            that.lstServiciosActivar  ;
+            that.lstServiciosActivar;
 
 
-           
-            var sumaServiciosAdd = 0 ,
-                sumaServiciosQuit = 0 ;
+
+            var sumaServiciosAdd = 0,
+                sumaServiciosQuit = 0;
 
 
             $.each(that.lstServiciosActivar, function (idx, service) {
-                content +=  content.length > 0  ?  separator  : "";
+                content += content.length > 0 ? separator : "";
                 content += string.format('<img src="{0}" alt="" class="icon-collapse-bar-horizontal remove-padding" style="width: 30px;" />', that.getImage(service.ServiceType));
                 content += string.format('<span class="text-line">{0}</span>', service.ServiceDescription);
-                sumaServiciosAdd +=  parseFloat(service.FixedCharge);
+                sumaServiciosAdd += parseFloat(service.FixedCharge);
             });
             controls.resumeServicesActivados.append(content);
 
@@ -475,22 +475,22 @@
                 sumaServiciosQuit += parseFloat(service.FixedCharge);
             });
             controls.resumeServicesDesactivados.append(content);
-           
+
             var markup = "";
-            
-          
+
+
 
             var el = that.lstServiciosActivar;
             if (el.length > 0) {
                 controls.divContenServicesAdd.show();
                 markup += '<b>--------------- SERVICIOS ACTIVADOS ---------------</b><br />';
-                       //<span class="summary">INTERNET | puerto 25 | Costo S/. 175.00</span> <br />
-                       //<span class="summary">TELEFONIA | 200 Min Multidestino | Costo S/. 16.00</span> <br />
-                       //<span class="summary">CABLE | Paquete Fox Premium | Costo S/. 15.00</span> <br />
-            $.each(el, function (i, eq) {
-                markup += string.format('<span class="summary"> {0} | {1}  Costo S/.  {2}  </span> <br />', eq.ServiceType, eq.ServiceDescription, eq.FixedCharge);
-                
-            })
+                //<span class="summary">INTERNET | puerto 25 | Costo S/. 175.00</span> <br />
+                //<span class="summary">TELEFONIA | 200 Min Multidestino | Costo S/. 16.00</span> <br />
+                //<span class="summary">CABLE | Paquete Fox Premium | Costo S/. 15.00</span> <br />
+                $.each(el, function (i, eq) {
+                    markup += string.format('<span class="summary"> {0} | {1}  Costo S/.  {2}  </span> <br />', eq.ServiceType, eq.ServiceDescription, eq.FixedCharge);
+
+                })
             }
             var nuevoCargoFijo = 0;
 
@@ -498,18 +498,18 @@
             nuevoCargoFijo = nuevoCargoFijo - parseFloat(sumaServiciosQuit);
             nuevoCargoFijo = nuevoCargoFijo.toFixed(2);
 
-            
+
 
             //var contServicesRemove = 0;
             var el = that.lstServiciosDesactivar;
             if (el.length > 0) {
                 controls.divContenServicesRemove.show();
                 markup += '<b>--------------- SERVICIOS DESACTIVADOS ---------------</b><br />';
-            $.each(el, function (i, eq) {
-                markup += string.format('<span class="summary"> {0} | {1}  Costo S/.  {2}  </span> <br />', eq.ServiceType, eq.ServiceDescription, eq.FixedCharge);
-            })
+                $.each(el, function (i, eq) {
+                    markup += string.format('<span class="summary"> {0} | {1}  Costo S/.  {2}  </span> <br />', eq.ServiceType, eq.ServiceDescription, eq.FixedCharge);
+                })
             }
-            
+
             //parseFloat(controls.spCostoFijoRegular.text().replace("S/", "")) + parseFloat(that.transactionData.Data.CustomerInformation.PackageCost)).toFixed(2)
             markup += '<br />'
             markup += string.format('<b>Fecha de Programación: </b> <span class="summary">{0}</span> <br />', $("#chPrograma").prop("checked") ? controls.txtCalendar.val() : that.getFechaActual());
@@ -522,20 +522,281 @@
             $("#resumeContent").empty();
             $("#resumeContent").append(markup);
 
-             
-            markup = '';
+
+            that.fnGenerateSpeech();
+        },
+        fnBillingCycle: function (BillingCycle) {
+            debugger;
+            var that = this;
+            var arrBillingCycle = [];
+            var controls = that.getControls();
+            // var BillingCycle = '20';//that.transactionData.Data.CustomerInformation.BillingCycle;
+            var fecProgramacion = $('#chPrograma').prop('checked') ? controls.txtCalendar.val() : that.getFechaActual();
+            var numCycle = 0;
+            var fecCicloFact0 = new Date(fecProgramacion.split('/')[2] + "/" + fecProgramacion.split('/')[1] + "/" + BillingCycle);
+            var fecCicloFact1 = new Date(fecProgramacion.split('/')[2] + "/" + fecProgramacion.split('/')[1] + "/" + BillingCycle);
+            var iniBillingCycle0 = fecCicloFact0;
+            var finBillingCycle0 = new Date(fecCicloFact1.setMonth(fecCicloFact1.getMonth()));
+            var item0 = {
+                'iniBillingCycle': new Date(iniBillingCycle0.setMonth(iniBillingCycle0.getMonth() - 1)),
+                'finBillingCycle': new Date(finBillingCycle0.setDate(finBillingCycle0.getDate() - 1))
+            }
+            arrBillingCycle.push(item0);
+
+            while (numCycle < 12) {
+                var fecCicloFact = new Date(fecProgramacion.split('/')[2] + "/" + fecProgramacion.split('/')[1] + "/" + BillingCycle);
+                var fecCicloFact2 = new Date(fecProgramacion.split('/')[2] + "/" + fecProgramacion.split('/')[1] + "/" + BillingCycle);
+
+                var iniBillingCycle = fecCicloFact;
+                var finBillingCycle = new Date(fecCicloFact2.setMonth(fecCicloFact2.getMonth() + numCycle + 1));
+
+
+                var item = {
+                    'iniBillingCycle': new Date(iniBillingCycle.setMonth(iniBillingCycle.getMonth() + numCycle)),
+                    'finBillingCycle': new Date(finBillingCycle.setDate(finBillingCycle.getDate() - 1))
+                }
+                arrBillingCycle.push(item);
+                numCycle++;
+            }
+            console.log(arrBillingCycle);
+
+            return arrBillingCycle;
+        },
+
+        fnGenerateSpeech: function () {
+            var that = this;
+            var markup = '';
+            var sumaServiciosAdd = 0;
+            var sumaServiciosQuit = 0;
+            var controls = this.getControls();
+            var fecProgramacion = $("#chPrograma").prop("checked") ? controls.txtCalendar.val() : that.getFechaActual();
+            var datFecProgramacion = $("#chPrograma").prop("checked") ? new Date(fecProgramacion.split('/')[2] + "/" + fecProgramacion.split('/')[1] + "/" + fecProgramacion.split('/')[1]) : new Date();
+            var BillingCycle = that.transactionData.Data.CustomerInformation.BillingCycle;
+            var arrBillingCycle = that.fnBillingCycle(that.transactionData.Data.CustomerInformation.BillingCycle);
+
+            debugger;
+            var cont = 0;
+
+            arrBillingCycle.forEach(function (item, idx) {
+                if (item.iniBillingCycle <= datFecProgramacion && datFecProgramacion <= item.finBillingCycle) {
+                    cont = idx;
+                }
+
+            });
+
+            var cierreCicloFacturacionAnt = arrBillingCycle[cont].finBillingCycle.getDate() + "/" + (that.AboveZero(arrBillingCycle[cont].finBillingCycle.getMonth() + 1)) + "/" + arrBillingCycle[cont].finBillingCycle.getFullYear();
+            var datCierreCicloFacturacionAnt = arrBillingCycle[cont].finBillingCycle;
+            var inicioCicloFacturacion = (that.AboveZero(arrBillingCycle[cont + 1].iniBillingCycle.getDate())) + "/" + (that.AboveZero(arrBillingCycle[cont + 1].iniBillingCycle.getMonth() + 1)) + "/" + (that.AboveZero(arrBillingCycle[cont + 1].iniBillingCycle.getFullYear()));
+            var cierreCicloFacturacion = (that.AboveZero(arrBillingCycle[cont + 1].finBillingCycle.getDate())) + "/" + (that.AboveZero(arrBillingCycle[cont + 1].finBillingCycle.getMonth() + 1)) + "/" + (that.AboveZero(arrBillingCycle[cont + 1].finBillingCycle.getFullYear()));
+            var inicioCicloFacturacionSig = (that.AboveZero(arrBillingCycle[cont + 2].iniBillingCycle.getDate())) + "/" + (that.AboveZero(arrBillingCycle[cont + 2].iniBillingCycle.getMonth() + 1)) + "/" + (that.AboveZero(arrBillingCycle[cont + 2].iniBillingCycle.getFullYear()));
+            var cierreCicloFacturacionSig = (that.AboveZero(arrBillingCycle[cont + 2].finBillingCycle.getDate())) + "/" + (that.AboveZero(arrBillingCycle[cont + 2].finBillingCycle.getMonth() + 1)) + "/" + (that.AboveZero(arrBillingCycle[cont + 2].finBillingCycle.getFullYear()));
+
+            $.each(that.lstServiciosActivar, function (idx, service) {
+                sumaServiciosAdd += parseFloat(service.FixedCharge);
+            });
+
+            $.each(that.lstServiciosDesactivar, function (idx, service) {
+                sumaServiciosQuit += parseFloat(service.FixedCharge);
+            });
+            debugger;
+            markup = '<div style="padding-left: 20px; padding-right: 20px;">';
             markup += '<br />';
-            markup += String.format(' Sr. ó Sra. <b>{0},  </b>, durante {1}, meses se estará brindando el descuento de <b> {2}, </b> por el alquiler del <b>paquete {3},   <br />',
-            that.transactionData.Data.CustomerInformation.CustomerName, "", "", "");
-            markup += String.format('Asimismo, mencionarle que en el siguinte recibo se estará cobrando el proporcional más el cobro del mes del <br />  paquete contratado que será el monto de <b> {0}.</b><br />', controls.spCostoFijoRegular.text());
-            markup += String.format('<br /> Después de la promoción, percibirá un cobro adicional de <b> {0}</b> correspondiente al <b>paquete {1}.</></b><br />', controls.spCostoFijoRegular.text(), "--");
-            markup += '<br /> <span>*Recordarle que el paquete se estara activando en las proximas horas.</span>';
+            markup += String.format('<b> Estimado  {0}</b>,', that.transactionData.Data.CustomerInformation.CustomerName);
+            markup += '<b> por la modificación solicitada de sus servicios adicionales le informaré los importes estimados para sus siguientes recibos: </b>';
+            markup += '<br />';
+            markup += '<br />';
+            markup += '<b> Modificaciones realizadas: </b>';
+            markup += '<br />';
+            markup += '<div style="padding-left: 25px;" >';
+            markup += '<table>'
+            markup += '<tr>';
+            markup += '<td class="text-left" style="width:400px"  >';
+            markup += '<b>Servicio</b>';
+            markup += '</td>';
+            markup += '<td class="text-center">';
+            markup += '<b>Acción</b>';
+            markup += '</td>';
+            markup += '</tr>';
+
+            var arrServCurrent = that.transactionData.Data.AdditionalServices;
+            var servActivar = that.lstServiciosActivar;
+            var servDesactivar = that.lstServiciosDesactivar;
+            var arrServActDesc;
+            var that = this; "";
+            var arrServSinModificar = [];
+            var arrServModificado = [];
+            var arrServActDescSinMod = [];
+            var array1;
+
+            servActivar.forEach(function (Item) {
+                Item.tdAccion = '<td class="text-center"; style="color:#047e04;"> <b> Activar </b> </td>';
+                Item.Accion = 'Activar';
+            });
+            servDesactivar.forEach(function (Item) {
+                Item.tdAccion = '<td class="text-center"; style="color:#e50b1f;"> <b> Desactivar </b> </td>';
+                Item.Accion = 'Desactivar';
+            });
+            arrServActDesc = servActivar.concat(servDesactivar);
+
+            array1 = arrServCurrent.filter(function (item) {
+                return arrServActDesc.indexOf(item) == -1 ? true : false;
+            });
+
+            arrServSinModificar = array1;
+            var sumCargFijoSinModificar = 0;
+
+            arrServSinModificar.forEach(function (Item) {
+                Item.tdAccion = '<td class="text-center"; style=" "> <b> Sin Modificar</b> </td>';
+                Item.Accion = 'Sin Modificar';
+                sumCargFijoSinModificar += parseFloat(Item.FixedCharge);
+            });
+
+            arrServActDescSinMod = arrServActDesc.concat(arrServSinModificar);
+
+            $.each(arrServActDescSinMod, function (i, serv) {
+                markup += '<tr>';
+                markup += '<td>';
+                markup += string.format(' {0} | {1}  Costo S/.  {2}   <br />', serv.ServiceType.replace('SERVICIOS ADICIONALES -', ''), serv.ServiceDescription, serv.FixedCharge);
+                markup += '</td>';
+                markup += serv.tdAccion;
+                markup += '</tr>';
+            });
+
+            markup += '</table>'
+            markup += '</div>';
+
+            markup += '<br />';
+            // ***********************************************************************************************************************************
+            markup += String.format('<b> En el <u>siguiente</u> recibo a emitirse el {0} se estará cobrando: </b>', inicioCicloFacturacion);
+            markup += '<br />';
+            markup += '<ul>';
+
+            //Tabla: 1: Servicio Core + Equipos ********************************************************************************************
+
+            var cargoFijoNeto = 0;
+
+            that.transactionData.Data.CoreServices.forEach(function (Item) {
+                cargoFijoNeto += parseFloat(Item.FixedCharge);
+            });
+            if (that.transactionData.Data.AdditionalEquipment != null)
+                that.transactionData.Data.AdditionalEquipment.forEach(function (Item) {
+                    cargoFijoNeto += parseFloat(Item.FixedCharge);
+                });
+
+
+            markup += String.format('<li>Cargo Fijo Regular del Plan:  S/ {0} por el periodo del {1} al {2}</li>', cargoFijoNeto.toFixed(2), inicioCicloFacturacion, cierreCicloFacturacion);
+            // markup += '<br />';
+            markup += '<ul>';
+            // tabla
+            if (!$.array.isEmptyOrNull(that.transactionData.Data.CoreServices))
+                markup += that.fnTableSpeech(that.transactionData.Data.CoreServices);
+            //Tabla: 1.2: Servicio Adicionales ********************************************************************************************
+            markup += '</ul>';
+            var cargoFijoPuntosAdicionales = 0;
+            if (that.transactionData.Data.AdditionalEquipment != null)
+                that.transactionData.Data.AdditionalEquipment.forEach(function (Item) {
+                    cargoFijoPuntosAdicionales += parseFloat(Item.FixedCharge);
+                });
+            markup += String.format('<li>Cargo Fijo de Puntos Adicionales:   S/ {0} por el periodo del {1} al {2}</li>', parseFloat(cargoFijoPuntosAdicionales).toFixed(2), inicioCicloFacturacion, cierreCicloFacturacion);
+
+            markup += '<ul>';
+            if (!$.array.isEmptyOrNull(that.transactionData.Data.AdditionalEquipment))
+                markup += that.fnTableSpeech(that.transactionData.Data.AdditionalEquipment);
+            markup += '</ul>';
+
+            //Tabla: 2: Servicio Adicionales ********************************************************************************************
+            var cargFijoAdicionales = 0;
+
+            var listTabServAdi = arrServActDescSinMod.filter(function (e) { return (e.Accion != 'Desactivar') });
+            listTabServAdi.forEach(function (Item) {
+                cargFijoAdicionales += parseFloat(Item.FixedCharge);
+            });
+
+            markup += String.format('<li>Cargo Fijo de Servicios Adicionales:   S/ {0} por el periodo del {1} al {2}</li>', parseFloat(cargFijoAdicionales).toFixed(2), inicioCicloFacturacion, cierreCicloFacturacion);
+            markup += '<ul>';
+            markup += that.fnTableSpeech(listTabServAdi);
+            markup += '</ul>';
+
+            //Tabla: 3: Servicio Adicionales  Porporcional********************************************************************************************
+
+            var oneDay = 24 * 60 * 60 * 1000;
+            var diffDays = Math.round(Math.abs((datCierreCicloFacturacionAnt.getTime() - datFecProgramacion.getTime()) / (oneDay)));
+
+            var numDiasMes = 30;
+            var totProporcional = 0;
+            var tabProporcional = '';
+            tabProporcional += '<ul>';
+            tabProporcional += '<table>'
+
+            var listTabServProporcional = arrServActDescSinMod.filter(function (e) { return (e.Accion != 'Sin Modificar') });
+            $.each(listTabServProporcional, function (i, serv) {
+                tabProporcional += '<tr>';
+                tabProporcional += '<td style="width:300px"  >';
+                tabProporcional += '<li> <p style="white-space: pre; width:100%" class="text-overflow: ellipsis;"  >' + serv.ServiceDescription + '</p> </li>';//.padEnd(75, ".")
+                tabProporcional += '</td>';
+                tabProporcional += '<td class="text-left">';
+
+                var fixedCharge = (parseFloat(serv.FixedCharge) / numDiasMes * diffDays).toFixed(2);
+                fixedCharge = (serv.Accion == 'Activar') ? (fixedCharge * 1).toFixed(2) : (fixedCharge * -1).toFixed(2);
+
+                tabProporcional += string.format(' S/.  {0}   <br />', fixedCharge);
+                tabProporcional += '</td>';
+                tabProporcional += '</tr>';
+
+                totProporcional = parseFloat(totProporcional).toFixed(2) * 1 + parseFloat(fixedCharge).toFixed(2) * 1;
+
+            });
+            tabProporcional += '</table>'
+            tabProporcional += '</ul>';
+
+
+            markup += String.format('<li>Cargo Fijo Proporcional de Servicios Adicionales: S/ {0} del {1} al {2}, debido a las modificaciones fuera de inicio de ciclo.</li>', totProporcional.toFixed(2), fecProgramacion, cierreCicloFacturacionAnt);
+            markup += tabProporcional;
+            markup += '</ul>';
+
+            var nuevoCargoFijoTotal = (parseFloat(cargoFijoNeto).toFixed(2) * 1 + parseFloat(cargFijoAdicionales).toFixed(2) * 1).toFixed(2) + (parseFloat(cargoFijoPuntosAdicionales).toFixed(2) * 1);
+            var cargoFijoTotalSig = (parseFloat(totProporcional).toFixed(2) * 1 + parseFloat(nuevoCargoFijoTotal).toFixed(2) * 1 * 1).toFixed(2);
+            var textActivacion = (that.lstServiciosActivar.length > 0) ? 'por todos sus servicios contratados' : '';
+            markup += '<ul>';
+            markup += String.format('<li><b>Cargo Fijo Total:  S/ {0} {1}.</b></li>', cargoFijoTotalSig, textActivacion);
+            markup += '</ul>';
+            //markup += '<br />';
+
+            //Resumen Cargo Mes Total********************************************************************************************
+
+            markup += String.format('<b> El cargo fijo mensual que se estará cobrando a partir del {0} constará: </b>', inicioCicloFacturacionSig);
+            markup += '<br />';
+            markup += '</ul>';
+            markup += '<ul>';
+            markup += String.format('<li>Cargo Fijo Regular del Plan:  S/ {0}</li>', cargoFijoNeto.toFixed(2));
+            markup += String.format('<li>Cargo Fijo de Puntos Adicionales:  S/ {0}</li>', cargoFijoPuntosAdicionales.toFixed(2));
+            markup += String.format('<li>Cargo Fijo de Servicios Adicionales:  S/ {0}</li>', parseFloat(cargFijoAdicionales).toFixed(2));
+            markup += String.format('<li><b>Cargo Fijo Total:  S/ {0} por el periodo del {1} al {2} {3}.</b></li>', parseFloat(nuevoCargoFijoTotal).toFixed(2), inicioCicloFacturacionSig, cierreCicloFacturacionSig, textActivacion);
+            markup += '<br />';
+            markup += '</ul>';
+            markup += '<b> *Recordarle que el paquete se estará activando en las proximas horas. </b> <br />';
+            markup += '</div>';
             $("#speechone").empty();
             $("#speechone").append(markup);
 
+        },
 
+        fnTableSpeech: function (oServices) {
+            var markup = '';
+            markup += '<table>';
+            $.each(oServices, function (i, serv) {
+                markup += '<tr>';
+                markup += '<td style="width:300px"  >';
+                markup += '<li><p style="white-space: pre; width:100%" class="text-overflow: ellipsis;"  >' + serv.ServiceDescription + '</p> </li>';//+ eq.ServiceDescription.padEnd(75, ".")
+                markup += '</td>';
+                markup += '<td class="text-left">';
+                markup += string.format(' S/.  {0}   <br />', parseFloat(serv.FixedCharge).toFixed(2));
+                markup += '</td>';
+                markup += '</tr>';
+            });
 
-
+            markup += '</table>';
+            return markup;
         },
 
         ServicesValidation: function () {
@@ -577,9 +838,9 @@
             return true;
         },
 
-             
 
-    
+
+
         onMailCheck: function () {
 
             var that = this,
@@ -629,16 +890,16 @@
             var controls = this.getControls();
             controls.ddlCenterofAttention.closest('.form-control').removeClass('has-error');
             controls.centroAtencionZoneErrorMessage.text('');
-            
+
         },
 
         AsignControls: function (that, $element) {
-                      
+
             that.updateControl({
-                               
+
                 spCostoFijoRegular: $('#spCostoFijoRegular', $element),
                 spCostoFijoPromocional: $('#spCostoFijoPromocional', $element),
-           
+
                 spServiciosAgregados: $('#spServiciosAgregados', $element),
                 spServiciosDesactivados: $('#spServiciosDesactivados', $element),
 
@@ -664,33 +925,13 @@
                 centroAtencionZoneErrorMessage: $('#ErrorMessageddlCenterofAttention', $element),
                 timeZoneErrorMessage: $('#ErrorMessageddlTimeZone', $element),
 
-               
+
 
             });
 
             return that.getControls();
         },
 
-        /* Partial View CustomerData - Datos Cliente */
-        /*
-        customerInformationPromise: function (container) {
-
-            return new Promise(function (resolve, reject) {
-
-                $.ajax({
-                    type: 'POST',
-                    async: false,
-                    url: '/AdditionalServices/Home/CustomerData',
-                    success: function (res) {
-                        container.html(res);
-                        resolve(true);
-                    },
-                    error: function (err) { reject(err) }
-                });
-                  
-            });
-        },
-*/
         InitialValidation: function () {
 
             var that = this,
@@ -700,29 +941,29 @@
 
             if (!$.array.isEmptyOrNull(that.transactionData.Data.CustomerInformation)) {
 
-                            console.log('stateContracto: ' + stateContract);
-                            console.log('stateService:  ' + stateService);
-                            console.log('Plataforma:  ' + Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT);
-                            if (Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE') {
-                                    if (stateContract.trim().toUpperCase() != 'ACTIVO' || stateService.trim().toUpperCase() != 'ACTIVO') {
-                                        alert("El contrato no se encuentra activo.", 'Alerta', function () {
-                        $.unblockUI();
-                        parent.window.close();
-                    });
-                    return false;
+                console.log('stateContracto: ' + stateContract);
+                console.log('stateService:  ' + stateService);
+                console.log('Plataforma:  ' + Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT);
+                if (Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE') {
+                    if (stateContract.trim().toUpperCase() != 'ACTIVO' || stateService.trim().toUpperCase() != 'ACTIVO') {
+                        alert("El contrato no se encuentra activo.", 'Alerta', function () {
+                            $.unblockUI();
+                            parent.window.close();
+                        });
+                        return false;
+                    }
+                }
+                else {
+                    if (stateContract.trim().toUpperCase() != 'ACTIVO') {
+                        alert("El contrato no se encuentra activo.", 'Alerta', function () {
+                            $.unblockUI();
+                            parent.window.close();
+                        });
+                        return false;
+                    }
                 }
             }
-            else {
-                                    if (stateContract.trim().toUpperCase() != 'ACTIVO') {
-                                        alert("El contrato no se encuentra activo.", 'Alerta', function () {
-                                            $.unblockUI();
-                                            parent.window.close();
-                                        });
-                return false;
-            }
-                            }
-            }
-			debugger;
+            debugger;
             if (!$.array.isEmptyOrNull(that.transactionData.Data.ValidarTransaccion)) {
                 if (that.transactionData.Data.ValidarTransaccion.Codigo == "-3") {
                     alert(that.transactionData.Data.ValidarTransaccion.Mensaje, 'Alerta', function () {
@@ -818,7 +1059,7 @@
                         return $.inArray(el.LineID, currentServicesList.map(function (e) { return e.LineID })) < 0;
                     }
                     );
-           
+
 
 
 
@@ -844,16 +1085,16 @@
             console.log(additionalServices);
             if ($.array.isEmptyOrNull(additionalServices)) {
                 alert("El plan  del cliente no tiene configurado servicios adicionales.", 'Alerta', function () {
-                        $.unblockUI();
-                        parent.window.close();
-                    });
-               
+                    $.unblockUI();
+                    parent.window.close();
+                });
+
                 return false;
             }
-        
+
             that.fnGetNombreServicios(additionalServices);
 
-            
+
             //that.fillProductsTable_DataTable(controls.tblProductTable, additionalServicesList);
             //that.initCustomerProductsSummary_DataTable(currentServicesList);
 
@@ -867,116 +1108,116 @@
 
         },
 
-          uncheckRow: function(tableName, IdTR, swit) {
-              var table = $(tableName).DataTable();
-              var row = table.row();//"#" + IdTR);
-              //var row = IdTR;
-                var rowData = row.data();
-              
-                var $tr = $(row.node());
-              //var $checkbox = $tr.find('input[type="checkbox"]')
+        uncheckRow: function (tableName, IdTR, swit) {
+            var table = $(tableName).DataTable();
+            var row = table.row();//"#" + IdTR);
+            //var row = IdTR;
+            var rowData = row.data();
 
-                var $checkbox = IdTR.find('input[type="checkbox"]')
-                //if($checkbox.is(':checked')){
-                //    $checkbox.prop('checked', false);
-                //}
-                //else {
-                //    $checkbox.prop('checked', true);
-                //}
-               
-                $checkbox.prop('checked', swit);
+            var $tr = $(row.node());
+            //var $checkbox = $tr.find('input[type="checkbox"]')
 
-            },
+            var $checkbox = IdTR.find('input[type="checkbox"]')
+            //if($checkbox.is(':checked')){
+            //    $checkbox.prop('checked', false);
+            //}
+            //else {
+            //    $checkbox.prop('checked', true);
+            //}
+
+            $checkbox.prop('checked', swit);
+
+        },
 
 
         fillProductsTable_DataTable: function (customerProductsTable, data, serviciosParaDesasociarAsociar) {
-            
+
             var that = this,
                 controls = that.getControls();
-         
+
             var dataSource = that.transactionData.Data.FixPlanesServCapanas;
 
-          
+
             that.fillListEquipmentsToDisassociate(serviciosParaDesasociarAsociar);
 
-           $('#tblCustomerAssociateEquiment').DataTable({
-            "columnDefs": [
-            {
-                'targets': 0,
-                'checkboxes': {
-                    'selectRow': true
+            $('#tblCustomerAssociateEquiment').DataTable({
+                "columnDefs": [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+
                 },
 
-            },
+                {
+                    'targets': 1,
+                    'checkboxes': {
+                        'selectRow': true
+                    },
+                    'render': function (data, type, full, meta) {
+                        return '<input type="checkbox" />';
+                    },
+                    "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                        $('td:eq(0)', nRow).html('<input type="checkbox" name="checkbox" class="checkbox" value="' + 3 + '">');
 
-            {
-                'targets': 1,
-                'checkboxes': {
-                    'selectRow': true
-                },
-                'render': function (data, type, full, meta) {
-                    return '<input type="checkbox" />';
-                },
-                "fnCreatedRow": function (nRow, aData, iDataIndex) {
-                    $('td:eq(0)', nRow).html('<input type="checkbox" name="checkbox" class="checkbox" value="' + 3 + '">');
+                    }
 
+                },
+
+                {
+                    "render": function (data, type, row) {
+                        return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data + '</span>';
+                    },
+                    "targets": 2
+                },
+                {
+                    "render": function (data, type, row) {
+                        //return 'S/' + data;
+                        return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/' + data + '</span>';
+                    },
+                    "targets": 3
+                },
+                {
+                    "targets": [0, 4],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": "_all",
+                    "sortable": false,
+                    "searchable": false,
+                    "orderable": false
                 }
-
-            },
-
-            {
-                "render": function (data, type, row) {
-                    return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data + '</span>';
+                ],
+                "select": {
+                    "style": "multi"
                 },
-                "targets": 2
-            },
-            {
-                "render": function (data, type, row) {
-                    //return 'S/' + data;
-                    return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/' + data + '</span>';
-                },
-                "targets": 3
-            },
-            {
-                "targets": [0,4],
-                "visible": false,
-                "searchable": false
-            },
-            {
-                "targets": "_all",
-                "sortable": false,
-                "searchable": false,
-                "orderable": false
-            }
-        ],
-        "select": {
-                "style": "multi"
-        },
-        "data": data,
-            "order": [[1, 'asc']],
-            "columns": [
-                //{ "data": "strCodigoServicio" },
-                //{ "data": "strTipoServicio" },
-                //{ "data": "strNombreServicio" },
-                //{ "data": "dblMontoServicio" },
-                //{ "data": "dblPromocion" }
-                { "data": "LineID"},
-                { "data": "ServiceType" },
-                { "data": "ServiceDescription" },
-                { "data": "FixedCharge" },
-                { "data": "cargoFijoPromocion" }
-            ],
-           
-            "createdRow": function (row, data, dataIndex) {
-                //if (data.intServicioActivado == 1) {
+                "data": data,
+                "order": [[1, 'asc']],
+                "columns": [
+                    //{ "data": "strCodigoServicio" },
+                    //{ "data": "strTipoServicio" },
+                    //{ "data": "strNombreServicio" },
+                    //{ "data": "dblMontoServicio" },
+                    //{ "data": "dblPromocion" }
+                    { "data": "LineID" },
+                    { "data": "ServiceType" },
+                    { "data": "ServiceDescription" },
+                    { "data": "FixedCharge" },
+                    { "data": "cargoFijoPromocion" }
+                ],
+
+                "createdRow": function (row, data, dataIndex) {
+                    //if (data.intServicioActivado == 1) {
                     $(row).addClass("info-naranja");
-                //}
-            },
-            "drawCallback": function (settings) {
-                var api = this.api();
-                var rows = api.rows({ page: 'current' }).nodes();
-                var last = null;
-                var groupadmin = [];
+                    //}
+                },
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
+                    var groupadmin = [];
                     if (Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE')
                         api.column(1, { page: 'current' }).data().each(function (ServiceType, i) {
                             if (last !== ServiceType && groupadmin.indexOf(i) == -1) {
@@ -1006,68 +1247,68 @@
                             }
                         });
                     else
-                api.column(1, { page: 'current' }).data().each(function (group, i) {
-                    if (last !== group && groupadmin.indexOf(i) == -1) {
-                        var imagen;
+                        api.column(1, { page: 'current' }).data().each(function (group, i) {
+                            if (last !== group && groupadmin.indexOf(i) == -1) {
+                                var imagen;
 
                                 switch (ServiceType) {
-                            case 'Cable':
-                                imagen = 'ico_cable.svg';
-                                break;
-                            case 'Internet':
-                                imagen = 'ico_internet.svg';
-                                break;
-                                    case 'Telefonia':
-                                imagen = 'ico_phone.svg';
+                                    case 'Cable':
+                                        imagen = 'ico_cable.svg';
                                         break;
-                        }
-                        $(rows).eq(i).before(
-                            '<tr><td colspan="4" class="info-gestion"><img src="/Content/Images/SUFija/' + imagen + '">' + group + '</td></tr>'
-                        );
-                        groupadmin.push(i);
-                        last = group;
-                    }
-                });
-            },
-            "info": false,
-            "scrollX": true,
-            "scrollY": false,
-            "scrollCollapse": false,
-            "paging": false,
-            "searching": false,
-            "destroy": true
+                                    case 'Internet':
+                                        imagen = 'ico_internet.svg';
+                                        break;
+                                    case 'Telefonia':
+                                        imagen = 'ico_phone.svg';
+                                        break;
+                                }
+                                $(rows).eq(i).before(
+                                    '<tr><td colspan="4" class="info-gestion"><img src="/Content/Images/SUFija/' + imagen + '">' + group + '</td></tr>'
+                                );
+                                groupadmin.push(i);
+                                last = group;
+                            }
+                        });
+                },
+                "info": false,
+                "scrollX": true,
+                "scrollY": false,
+                "scrollCollapse": false,
+                "paging": false,
+                "searching": false,
+                "destroy": true
             });
 
             //$.unblockUI();
-            
-           
+
+
             var table = $('#tblCustomerAssociateEquiment').DataTable();// controls.tblProductTable.DataTable();
 
             $('#tblCustomerAssociateEquiment input:checkbox').change(function () {
                 var $row = $(this).closest('tr');
-                var data = table.row($row).data(); 
+                var data = table.row($row).data();
                 ////that.uncheckRow("#tblCustomerAssociateEquiment", $row, data.check ? false : true);
 
             });
-        
+
 
 
             $('#tblCustomerAssociateEquiment').on('click', 'tbody td, thead th:first-child', function (e) {
                 var $row = $(this).closest('tr');
                 var data = table.row($row).data();
-                
+
                 if (data != undefined || data != null) {
 
                     //var searchequipment = that.lstEquipmentsToAssociate.indexOf(data);
-                    
+
                     //if (searchequipment >= 0) {
                     //      that.lstEquipmentsToAssociate.splice(searchequipment, 1);
                     //    that.lstEquipmentsToAssociate.filter(function (el, idx) { return el.LineID != data.LineID });
-                      
+
                     //} else {
                     //    that.lstEquipmentsToAssociate.push(data);
                     //}
-                     
+
                     data.check = data.check ? false : true;
 
                     that.uncheckRow("#tblCustomerAssociateEquiment", $row, data.check);
@@ -1080,13 +1321,13 @@
                     }
                 }
             });
-            
+
         },
 
         /*Carga los  Servicio Actuales del cliente*/
         initCustomerProductsSummary_DataTable: function (data, serviciosParaAsociar) {
             var that = this, controls = that.getControls();
-            data= data.sort(function (a, b) { return a.ServiceType < b.ServiceType ? -1 : +(a.ServiceType > b.ServiceType) });
+            data = data.sort(function (a, b) { return a.ServiceType < b.ServiceType ? -1 : +(a.ServiceType > b.ServiceType) });
             debugger;
             that.fillListEquipmentsToAssociate(serviciosParaAsociar);
 
@@ -1094,137 +1335,137 @@
 
             that.getCountFixed(data, true);
 
- 
+
             $('#tblCustomerEquipmentSummary').DataTable({
                 //controls.tblProductsSummary.DataTable({
-                    "columnDefs": [
-                       {
-                           'targets': 0,
-                           'checkboxes': {
-                               'selectRow': true
-                           }
-                       },
+                "columnDefs": [
+                   {
+                       'targets': 0,
+                       'checkboxes': {
+                           'selectRow': true
+                       }
+                   },
 
-                         {
-                             'targets': 1,
-                             'checkboxes': {
-                                 'selectRow': true
-                             },
-                             'render': function (data, type, full, meta) {
-                                 return '<input type="checkbox" />';
-                             },
-                             "fnCreatedRow": function (nRow, aData, iDataIndex) {
-                                 $('td:eq(0)', nRow).html('<input type="checkbox" name="checkbox" class="checkbox" value="' + aData.LineID + '">');
-
-                             }
-
+                     {
+                         'targets': 1,
+                         'checkboxes': {
+                             'selectRow': true
                          },
+                         'render': function (data, type, full, meta) {
+                             return '<input type="checkbox" />';
+                         },
+                         "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                             $('td:eq(0)', nRow).html('<input type="checkbox" name="checkbox" class="checkbox" value="' + aData.LineID + '">');
 
-                      {
-                          "render": function (data, type, row) {
-                              return '<span>&nbsp;&nbsp;&nbsp;&nbsp;' + data + '</span>';
-                          },
-                          "targets": 2
+                         }
+
+                     },
+
+                  {
+                      "render": function (data, type, row) {
+                          return '<span>&nbsp;&nbsp;&nbsp;&nbsp;' + data + '</span>';
                       },
-                       {
-                           "render": function (data, type, row) {
-                               return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/' + data + '</span>';
-                           },
-                           "targets": 3
+                      "targets": 2
+                  },
+                   {
+                       "render": function (data, type, row) {
+                           return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/' + data + '</span>';
                        },
-                       {
-                           "render": function (data, type, row) {
-                               return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/' + data + '</span>';
-                           },
-                           "targets": 4
+                       "targets": 3
+                   },
+                   {
+                       "render": function (data, type, row) {
+                           return '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/' + data + '</span>';
                        },
-                      {
-                          "targets": [0],//[0,1],
-                          "visible": false,
-                          "searchable": false
-                      },
-                      {
-                          "targets": "_all",
-                          "sortable": false,
-                          "searchable": false,
-                          "orderable": false
-                      }
-                    ],
-                    "select": {
-                        "style": "multi"
-                    },
-                    "order": [[1, 'asc']],
-                    "data": data,
-                    "columns": [
+                       "targets": 4
+                   },
+                  {
+                      "targets": [0],//[0,1],
+                      "visible": false,
+                      "searchable": false
+                  },
+                  {
+                      "targets": "_all",
+                      "sortable": false,
+                      "searchable": false,
+                      "orderable": false
+                  }
+                ],
+                "select": {
+                    "style": "multi"
+                },
+                "order": [[1, 'asc']],
+                "data": data,
+                "columns": [
 
-                        //esto era para probar con la data del cliente, 
-                            //{ "data": "EquipmentSerial" },
-                            //{ "data": "ServiceName" },
-                            //{ "data": "ServiceDescription" },
-                            //{ "data": "FixedChargePromotion" },
-                            //{ "data": "FixedCharge" }
+                    //esto era para probar con la data del cliente, 
+                        //{ "data": "EquipmentSerial" },
+                        //{ "data": "ServiceName" },
+                        //{ "data": "ServiceDescription" },
+                        //{ "data": "FixedChargePromotion" },
+                        //{ "data": "FixedCharge" }
 
-                             { "data": "LineID" },
-                            { "data": "ServiceType" },
-                            { "data": "ServiceDescription" },
-                            { "data": "cargoFijoPromocion" },
-                            { "data": "FixedCharge" }
-                    ],
-                   
-                    "createdRow": function(row, data, dataIndex) {
-                        //if (data.intServicioActivado == 0) {
-                            $(row).addClass("info-celeste");
-                        //}
-                    },
-                    "drawCallback": function (settings) {
-                        var api = this.api();
-                        var rows = api.rows({ page: 'current' }).nodes();
-                        var last = null;
-                        var groupadmin = [];
+                         { "data": "LineID" },
+                        { "data": "ServiceType" },
+                        { "data": "ServiceDescription" },
+                        { "data": "cargoFijoPromocion" },
+                        { "data": "FixedCharge" }
+                ],
+
+                "createdRow": function (row, data, dataIndex) {
+                    //if (data.intServicioActivado == 0) {
+                    $(row).addClass("info-celeste");
+                    //}
+                },
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
+                    var groupadmin = [];
                     if (Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE')
                         api.column(1, { page: 'current' }).data().each(function (ServiceType, i) {
-                        if (last !== ServiceType && groupadmin.indexOf(i) == -1) {
-                            var imagen;
-                            switch (ServiceType) {
-                                case 'SERVICIOS ADICIONALES - CABLE':
-                                    imagen = 'ico_cable.svg';
-                                    break;
-                                case 'SERVICIOS ADICIONALES - INTERNET':
-                                    imagen = 'ico_internet.svg';
-                                    break;
-                                case 'SERVICIOS ADICIONALES - TELEFONIA':
-                                    imagen = 'ico_phone.svg';
-                                    break;
-                                case 'SERVICIOS ADICIONALES - CABLE IPTV':
-                                    imagen = 'ico_cable.svg';
-                                    break;
-                                case 'SERVICIOS ADICIONALES - TELEFONIA FTTH':
-                                    imagen = 'ico_phone.svg';
-                                    break;
+                            if (last !== ServiceType && groupadmin.indexOf(i) == -1) {
+                                var imagen;
+                                switch (ServiceType) {
+                                    case 'SERVICIOS ADICIONALES - CABLE':
+                                        imagen = 'ico_cable.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - INTERNET':
+                                        imagen = 'ico_internet.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - TELEFONIA':
+                                        imagen = 'ico_phone.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - CABLE IPTV':
+                                        imagen = 'ico_cable.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - TELEFONIA FTTH':
+                                        imagen = 'ico_phone.svg';
+                                        break;
+                                }
+                                $(rows).eq(i).before(
+                                    '<tr id="' + i + '"><td colspan="4" class="info-agrupa"><img src="/Content/Images/SUFija/' + imagen + '">' + ServiceType + '</td></tr>'
+                                );
+                                groupadmin.push(i);
+                                last = ServiceType;
                             }
-                            $(rows).eq(i).before(
-                                '<tr id="' + i + '"><td colspan="4" class="info-agrupa"><img src="/Content/Images/SUFija/' + imagen + '">' + ServiceType + '</td></tr>'
-                            );
-                            groupadmin.push(i);
-                            last = ServiceType;
-                        }
-                    });
+                        });
                     else
                         api.column(1, { page: 'current' }).data().each(function (group, i) {
                             if (last !== group && groupadmin.indexOf(i) == -1) {
                                 var imagen;
 
-                            switch (ServiceType) {
+                                switch (ServiceType) {
                                     case 'Cable':
                                         imagen = 'ico_cable.svg';
                                         break;
                                     case 'Internet':
                                         imagen = 'ico_internet.svg';
                                         break;
-                                case 'Telefonia':
+                                    case 'Telefonia':
                                         imagen = 'ico_phone.svg';
-                                    break;
-        
+                                        break;
+
                                 }
                                 $(rows).eq(i).before(
                                     '<tr id="' + i + '"><td colspan="4" class="info-agrupa"><img src="/Content/Images/SUFija/' + imagen + '">' + group + '</td></tr>'
@@ -1233,56 +1474,56 @@
                                 last = group;
                             }
                         });
-                    },
-                    "info": false,
-                    "scrollX": true,
-                    "scrollY": false,
-                    "scrollCollapse": true,
-                    "paging": false,
-                    "searching": false,
-                    "destroy": true 
-                });
+                },
+                "info": false,
+                "scrollX": true,
+                "scrollY": false,
+                "scrollCollapse": true,
+                "paging": false,
+                "searching": false,
+                "destroy": true
+            });
             var table = $('#tblCustomerEquipmentSummary').DataTable();//  controls.tblProductsSummary.DataTable();
 
 
-                $('#tblCustomerEquipmentSummary input:checkbox').change(function () {
-                    var $row = $(this).closest('tr');
-                    var data = table.row($row).data();
-                    ///that.uncheckRow("#tblCustomerEquipmentSummary", $row, data.check ? false : true);
+            $('#tblCustomerEquipmentSummary input:checkbox').change(function () {
+                var $row = $(this).closest('tr');
+                var data = table.row($row).data();
+                ///that.uncheckRow("#tblCustomerEquipmentSummary", $row, data.check ? false : true);
 
-                });
+            });
 
-                $('#tblCustomerEquipmentSummary').on('click', 'tbody td, thead th:first-child', function (e) {
-                    var $row = $(this).closest('tr');
-                    var data = table.row($row).data();
+            $('#tblCustomerEquipmentSummary').on('click', 'tbody td, thead th:first-child', function (e) {
+                var $row = $(this).closest('tr');
+                var data = table.row($row).data();
 
-                    if (data != undefined || data != null) {
+                if (data != undefined || data != null) {
 
-                        //var searchequipment = that.lstEquipmentsToAssociate2.indexOf(data);
+                    //var searchequipment = that.lstEquipmentsToAssociate2.indexOf(data);
 
-                        //if (searchequipment >= 0) {
-                        //    that.lstEquipmentsToAssociate2.splice(searchequipment, 1);
-                        //    that.lstEquipmentsToAssociate2.filter(function (el, idx) { return el.LineID != data.LineID });
+                    //if (searchequipment >= 0) {
+                    //    that.lstEquipmentsToAssociate2.splice(searchequipment, 1);
+                    //    that.lstEquipmentsToAssociate2.filter(function (el, idx) { return el.LineID != data.LineID });
 
-                        //} else {
-                        //    that.lstEquipmentsToAssociate2.push(data);
-                        //}
-                       
-                        data.check = data.check ? false : true;
-                         
-                        that.uncheckRow("#tblCustomerEquipmentSummary", $row, data.check);
-                        if (that.lstEquipmentsToAssociate2.length > 0) {
-                            controls.btnAdd.prop('disabled', true);
-                            controls.btnRemove.prop('disabled', false);
-                        } else {
-                            controls.btnAdd.prop('disabled', false);
-                        }
+                    //} else {
+                    //    that.lstEquipmentsToAssociate2.push(data);
+                    //}
+
+                    data.check = data.check ? false : true;
+
+                    that.uncheckRow("#tblCustomerEquipmentSummary", $row, data.check);
+                    if (that.lstEquipmentsToAssociate2.length > 0) {
+                        controls.btnAdd.prop('disabled', true);
+                        controls.btnRemove.prop('disabled', false);
+                    } else {
+                        controls.btnAdd.prop('disabled', false);
                     }
-                });
+                }
+            });
             $('.dataTables_filter').hide();
 
             //$.unblockUI();
-            
+
         },
 
         jsonOrderMatriz: function () {
@@ -1321,7 +1562,7 @@
                     return;
                 }
             }
-            
+
             //that.jsonOrderMatriz();
             //if (that.lstEquipmentsToDisassociate.length > 0 || that.lstEquipmentsToAssociate.length > 0) {
             //    for (var j = 0; j < that.lstEquipmentsToAssociate.length; j++) {
@@ -1332,16 +1573,16 @@
             //        }
             //    }
             //}
-                      
+
             that.lstEquipmentsToDisassociate = that.lstEquipmentsToDisassociate.concat(datosParaAsociar);
             that.lstEquipmentsToAssociate = that.lstEquipmentsToAssociate.filter(function (el, idx) { return el.check != true });
-            
+
             if (that.lstEquipmentsToAssociate.length == 0) {
                 var table = $('#tblCustomerAssociateEquiment').DataTable()
                 table.rows().remove().draw();
             };
 
-           
+
             that.lstEquipmentsToAssociate2 = that.lstEquipmentsToDisassociate;
             $.each(that.lstEquipmentsToAssociate2, function (idx, service) {
                 that.lstEquipmentsToAssociate2[idx]["check"] = false;
@@ -1354,9 +1595,9 @@
 
             //Actualizar conteo y cargos fijos
             that.getCountFixed(that.lstEquipmentsToDisassociate, false);
-           
+
             return;
-         
+
 
             //Actualizar ambas listas
             if (that.lstEquipmentsToDisassociate.length == 0) {
@@ -1381,7 +1622,7 @@
                controls = that.getControls();
 
             var attNuevos = [];
-                     
+
 
             /****************************************************************************************************************************
             OBTENEMOS AQUELLOS SERVICIOS ADICIONALES DEL CLIENTE QUE EXISTEN EN EL PLAN COMERCIAL DE OBTENER FIJA CAMPAÑAS DE PVU
@@ -1393,12 +1634,13 @@
                 //debugger;
                 feed = that.additionalServicesSession.Data.AdditionalServices.filter(function (item) { return item.LineID == service.idServPvu && item.coreAdicional != "CORE ADICIONAL" });
                 //feed = that.additionalServicesSession.Data.AdditionalServices.filter(function (item) { return item.LineID == service.LineID && item.coreAdicional != "CORE ADICIONAL" });
-               // console.log('service.idServPvu --> ' + service.idServPvu + ' -- ' + 'service.idServPvuTobe --> ' + service.idServPvuTobe);
+                // console.log('service.idServPvu --> ' + service.idServPvu + ' -- ' + 'service.idServPvuTobe --> ' + service.idServPvuTobe);
                 feed = that.additionalServicesSession.Data.AdditionalServices.filter(function (item) {
-                    return (item.LineID == service.idServPvu || item.LineID == service.idServPvuTobe) && item.coreAdicional != "CORE ADICIONAL"})
+                    return (item.LineID == service.idServPvu || item.LineID == service.idServPvuTobe) && item.coreAdicional != "CORE ADICIONAL"
+                })
                             .map(function (item) {
                                 return {
-                                    CodeGroup : item.CodeGroup,
+                                    CodeGroup: item.CodeGroup,
                                     FixedCharge: item.FixedCharge,
                                     Group: item.Group,
                                     LineID: Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE' ? service.idServPvu : item.LineID,//$.string.isEmptyOrNull(item.idServPvu)? item.LineID : item.idServPvu,//Baja de servicio -> Para As Is/Tobe enviar el campo idServPvu
@@ -1432,7 +1674,7 @@
                                     idServPvuTobe: service.idServPvuTobe,
                                     familia: item.familia,
                                 }
-                            }); 
+                            });
                 attNuevos = attNuevos.concat(feed);
             });
 
@@ -1453,11 +1695,11 @@
                        item.ServiceEquiptment == 'SERVICIO'
                });
 
-            that.generarActualizacionServicios(that.transactionData.Data.AdditionalServices,  AdiServices, false);
+            that.generarActualizacionServicios(that.transactionData.Data.AdditionalServices, AdiServices, false);
             that.lstServiciosDesactivarPreCarga;
             that.lstServiciosActivarPreCarga;
             that.additionalServicesSession.Data.AdditionalServices = that.lstServiciosActivarPreCarga;;
-             
+
 
         },
 
@@ -1473,7 +1715,7 @@
                 var table = $('#tblCustomerEquipmentSummary').DataTable()
                 table.rows().remove().draw();
             };
-          
+
             that.lstEquipmentsToDisassociate = that.lstEquipmentsToAssociate2;
             $.each(that.lstEquipmentsToDisassociate, function (idx, service) {
                 that.lstEquipmentsToDisassociate[idx]["check"] = false;
@@ -1487,7 +1729,7 @@
             that.getAssociateItem(that.lstEquipmentsToDisassociate);
             that.getDisassociateItem(that.lstEquipmentsToAssociate);
 
-          
+
             //Actualizar conteo y cargos fijos
             that.getCountFixed(that.lstEquipmentsToDisassociate, false);
 
@@ -1509,15 +1751,15 @@
             that.getCountFixed(that.lstEquipmentsToAssociate);
         },
 
-        getJSONProgramacionTarea: function(){
-        
+        getJSONProgramacionTarea: function () {
+
         },
 
         getCountFixed: function (dataAgregados, opcCargaInicial) {
             var that = this;
 
             that.generarActualizacionServicios(that.lstEquipmentsToDisassociateInit, that.lstEquipmentsToAssociate2, true);
-       
+
 
             var that = this, controls = that.getControls();
             //Conteo de servicios agregados y desactivados
@@ -1539,34 +1781,34 @@
                 }
             }
 
-       ///ESTO ES PARA CUANDO CARGUE LA GRILLA NO MUESTRE QUE  HAY DESACTIVADOS, ESTO EMPIEZA DESPUES QUE EL USUARIO EMPIEZA A MANIPULAR LA GRILLA
+            ///ESTO ES PARA CUANDO CARGUE LA GRILLA NO MUESTRE QUE  HAY DESACTIVADOS, ESTO EMPIEZA DESPUES QUE EL USUARIO EMPIEZA A MANIPULAR LA GRILLA
             if (opcCargaInicial) {
                 controls.spServiciosDesactivados.empty().text(0);
             }
             else {
                 controls.spServiciosDesactivados.empty().text(conteoDesactivos);
             }
-           
 
 
 
-            dataAgregados =  that.lstServiciosActivar
+
+            dataAgregados = that.lstServiciosActivar
             var cargoFijo = 0;
             var cargoPromocion = 0;
             for (var i = 0; i < dataAgregados.length; i++) {
-                cargoFijo += parseFloat( dataAgregados[i].FixedCharge,2);
+                cargoFijo += parseFloat(dataAgregados[i].FixedCharge, 2);
                 cargoPromocion += parseFloat(dataAgregados[i].cargoFijoPromocion, 2);
             }
             var restaCargos = cargoFijo - cargoPromocion;
             cargoFijo = that.getRound(cargoFijo);
             //cargoPromocion = that.getRound(restaCargos);
- 
+
             //Cargos fijos regular y promocional
             controls.spCostoFijoRegular.empty().text('S/ ' + cargoFijo);
             controls.spCostoFijoPromocional.empty().text('S/ ' + cargoPromocion);
-            
-               
-           
+
+
+
 
         },
 
@@ -1604,7 +1846,7 @@
             }
         },
 
-       
+
         fillListEquipmentsToDisassociate: function (data) {
             var that = this,
                 controls = that.getControls();
@@ -1637,13 +1879,13 @@
         ddlTimeZone_Click: function () {
             var that = this,
                 controls = that.getControls();
-             
+
 
             controls.ddlTimeZone.closest('.form-control').removeClass('has-error');
             controls.timeZoneErrorMessage.text('');
         },
 
-     
+
 
         getLoadingPage: function () {
             var strUrlLogo = window.location.protocol + '//' + window.location.host + '/Content/images/SUFija/loading_Claro.gif';
@@ -1660,35 +1902,39 @@
                 }
             });
         },
-       
-       
+
+
         getHoraActual: function () {
             var that = this;
             var d = new Date();
             var HoraActual = that.AboveZero(d.getHours()) + ":" + (that.AboveZero(d.getMinutes() + 1)) + ":" + d.getSeconds();
             return HoraActual;
         },
-         
+
         Constancy_Generate: function () {
-          
+            var that = this;
             var params = ['height=600',
                 'width=750',
                 'resizable=yes',
                 'location=yes'
             ].join(',');
-
             var strIdSession = Session.UrlParams.IdSession;
-            window.open('/AdditionalServices/Home/ShowRecordSharedFile' + "?&strIdSession=" + strIdSession, "_blank", params);
+
+            if (that.transactionData.Data.Constancia)
+                window.open('/AdditionalServices/Home/ShowRecordSharedFile' + "?&strIdSession=" + strIdSession, "_blank", params);
+            else
+                alert('Ocurrió un error al generar la constancia.');
+
         },
         stopCountDown: false,
 
-        fnCheckTipoConsumidor: function(){
+        fnCheckTipoConsumidor: function () {
             var that = this;
-            return    that.transactionData.Data.CustomerInformation.CustomerType == that.transactionData.Configuration.Constants.Constantes_Consumer ? true : false;
+            return that.transactionData.Data.CustomerInformation.CustomerType == that.transactionData.Configuration.Constants.Constantes_Consumer ? true : false;
         },
-        
+
         getListaTipificacionTransversal: function () {
-            
+
             var that = this, controls = this.getControls();
 
             $.each(that.lstServiciosActivar, function (idx, service) {
@@ -1706,11 +1952,11 @@
             var xjsonTrama = {
                 "listaTrama": []
             };
-            
-           
-            
+
+
+
             $.each(resutl, function (idx, service) {
-                
+
                 /*
                 "codInter" : "168067",
 		        "serv" : "Internet 7000Kbps - Pack",
@@ -1720,27 +1966,27 @@
 		        "equipo" : "DECO REGULAR",
 		        "cantidad" : "2"
                 */
-                
+
                 var x = {
                     "codInter": "@idInteraccion",
-                    "serv": service.ServiceDescription, 
+                    "serv": service.ServiceDescription,
                     "tipServ": service.coreAdicional,
                     "grupServ": "",
                     "cf": "",
                     "equipo": service.ServiceEquiptment,
-                    "cantidad" : "1"
+                    "cantidad": "1"
                 };
 
                 xjsonTrama.listaTrama.push(x);
-                
+
             });
 
             return xjsonTrama.listaTrama;
-            
+
         },
 
         getServiciosTransversal: function () {
-            
+
             var that = this, controls = this.getControls();
 
             $.each(that.lstServiciosActivar, function (idx, service) {
@@ -1758,24 +2004,24 @@
             var xjsonTrama = {
                 "listaTrama": []
             };
-            
-           
-            
+
+
+
             $.each(resutl, function (idx, service) {
 
-               var x = {
-                   //"cod": service.Type == "A" ? "14" : "15", 
-                   "cod": service.Type == "A" ? that.transactionData.Configuration.Constants.Programacion_TipoCodAlta : that.transactionData.Configuration.Constants.Programacion_TipoCodBaja,
+                var x = {
+                    //"cod": service.Type == "A" ? "14" : "15", 
+                    "cod": service.Type == "A" ? that.transactionData.Configuration.Constants.Programacion_TipoCodAlta : that.transactionData.Configuration.Constants.Programacion_TipoCodBaja,
                     "msisdn": "",
-                    "fecprog":  ($("#chPrograma").prop("checked") ? controls.txtCalendar.val() : that.getFechaActual()), 
+                    "fecprog": ($("#chPrograma").prop("checked") ? controls.txtCalendar.val() : that.getFechaActual()),
                     "codid_pri": that.transactionData.Data.CustomerInformation.ContractNumber,
                     "customerid_pri": that.transactionData.Data.CustomerInformation.CustomerID,
                     "id_eai_sw": that.transactionData.Data.AuditRequest.Transaction,
                     "tipo_servicio": that.transactionData.Configuration.Constants.Constantes_Producto,
                     //"coser": service.coSer, //service.LineID,
-                    "coser": Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE' ? service.LineID: service.coSer , //that.transactionData.Data.idTransactionFront == '5' ? service.coSer : service.LineID,//ContratoPublico-TOBE
+                    "coser": Session.SessionParams.DATACUSTOMER.objPostDataAccount.plataformaAT === 'TOBE' ? service.LineID : service.coSer, //that.transactionData.Data.idTransactionFront == '5' ? service.coSer : service.LineID,//ContratoPublico-TOBE
                     "tipo_reg": service.Type,
-                    "usuario_sis": that.transactionData.Configuration.Constants.Constantes_UsrAplicacionSIAPOST , // that.transactionData.Configuration.Constants.Constantes_UsrAplicacion,
+                    "usuario_sis": that.transactionData.Configuration.Constants.Constantes_UsrAplicacionSIAPOST, // that.transactionData.Configuration.Constants.Constantes_UsrAplicacion,
                     "usuario_app": Session.SessionParams.USERACCESS.login,
                     "email_usuario_app": "",
                     "estado": "1", //that.transactionData.Data.Configuration.Programacion_CodigoEstado,
@@ -1788,16 +2034,16 @@
                     "msj_error": ""
                 };
 
-               xjsonTrama.listaTrama.push(x);
-                
+                xjsonTrama.listaTrama.push(x);
+
             });
 
             return xjsonTrama.listaTrama;
-            
+
         },
 
-        getXMLTareaProgramadaActivarDesactivar: function (model){
-       
+        getXMLTareaProgramadaActivarDesactivar: function (model) {
+
             var strXml;
             var that = this, controls = this.getControls();
             var tipoTrabajo = model.Type == "A" ? that.transactionData.Configuration.Constants.Programacion_TipoTrabajoAlta : that.transactionData.Configuration.Constants.Programacion_TipoTrabajoBaja;
@@ -1841,7 +2087,7 @@
             strXml += "<tipTra>" + tipoTrabajo + "</tipTra>";
             strXml += "<flgReingenieria>" + "1" + "</flgReingenieria>";
             strXml += "<codMotot>" + that.transactionData.Configuration.Constants.Programacion_TipoMotivo + "</codMotot>";
-                      
+
             if (model.ServiceType == "Cable") {
                 strXml += "<datosReg>" + model.descExterno + "</datosReg>";
             }
@@ -1866,14 +2112,14 @@
                 strXml += "</request>";
                 strXml += "</listaOpcionalRequest>";
             }
-                   
+
             strXml += model.Type == "A" ? "</activarServiciosAdicionalesRequest>" : "</desactivarServiciosAdicionalesRequest>";
 
             return strXml;
 
         },
 
-        funcionServiciosContancia: function() {
+        funcionServiciosContancia: function () {
             /*****************************************LOGICA PARA LA CONSTANCIA DE SERVICIOS ADICIONALES*************************************/
             var that = this, controls = this.getControls();
             var a = 0, b = 0, swith = "", conteoAct = 0, conteoDes = 0, label = "";
@@ -1912,7 +2158,7 @@
                 controls = that.getControls();
 
             var r = that.funcionServiciosContancia();
-            var xml = ""; 
+            var xml = "";
             xml += "<FORMATO_TRANSACCION>{0}</FORMATO_TRANSACCION>";
             xml += "<NRO_SERVICIO>{1}</NRO_SERVICIO>";
             xml += "<TITULAR_CLIENTE>{2}</TITULAR_CLIENTE>";
@@ -1978,7 +2224,7 @@
             return "<PLANTILLA>" + xml + "</PLANTILLA>";
 
         },
-       
+
 
 
         Save_click: function () {
@@ -1997,12 +2243,12 @@
             var that = this,
                 controls = that.getControls();
 
-         
+
 
             //that.getServiciosTransversal();
 
             that.getLoadingPage();
-             
+
             var r = that.funcionServiciosContancia();
 
 
@@ -2147,7 +2393,7 @@
                          },
 
                          {
-                             "parametro": "FIRSTNAME" ,// "P_FIRST_NAME",
+                             "parametro": "FIRSTNAME",// "P_FIRST_NAME",
                              "valor": that.transactionData.Data.CustomerInformation.CustomerName
                          },
 
@@ -2165,7 +2411,7 @@
                         },
                          {
                              "parametro": "REASON", //"P_REASON",
-                             "valor": Session.SessionParams.DATACUSTOMER.BusinessName 
+                             "valor": Session.SessionParams.DATACUSTOMER.BusinessName
                          },
                         {
                             "parametro": "xinter1",
@@ -2193,7 +2439,7 @@
                         },
                         {
                             "parametro": "IMEI",
-                            "valor": that.lstServiciosActivar.length == 0 ? 'D':'A'
+                            "valor": that.lstServiciosActivar.length == 0 ? 'D' : 'A'
                         },
                         {
                             "parametro": "inter7",
@@ -2209,7 +2455,7 @@
                         },
                         {
                             "parametro": "inter20",
-                            "valor": "strHdnCargoFijoSel"  
+                            "valor": "strHdnCargoFijoSel"
                         },
 
                         {
@@ -2226,20 +2472,20 @@
                         },
                         {
                             "parametro": "inter25",
-                            "valor": parseFloat(( parseInt(Session.SessionParams.DATACUSTOMER.BillingCycle)).toFixed(2))
+                            "valor": parseFloat((parseInt(Session.SessionParams.DATACUSTOMER.BillingCycle)).toFixed(2))
                         },
                        {
                            "parametro": "OPERATIONTYPE", //"P_OPERATION_TYPE",
                            "valor": ""//TipoTransaccion(A/D)
                        },
-                        
+
                         {
                             "parametro": "ADJUSTMENTREASON", // "P_ADJUSTMENT_REASON",
                             "valor": that.transactionData.Data.CustomerInformation.ContractNumber
                         },
                         {
                             "parametro": "inter8",
-                            "valor":parseFloat(( parseInt(that.transactionData.Data.CustomerInformation.CustomerID).toFixed(2)))
+                            "valor": parseFloat((parseInt(that.transactionData.Data.CustomerInformation.CustomerID).toFixed(2)))
                         },
                         {
                             "parametro": "TYPEDOCUMENT", // "P_TYPE_DOCUMENT",
@@ -2251,7 +2497,7 @@
                          },
                          {
                              "parametro": "inter16",
-                             "valor": that.fnCheckTipoConsumidor() ? Session.SessionParams.DATACUSTOMER.FullName :  ""
+                             "valor": that.fnCheckTipoConsumidor() ? Session.SessionParams.DATACUSTOMER.FullName : ""
                          },
                           {
                               "parametro": "NAMELEGALREP", // "P_NAME_LEGAL_REP",
@@ -2259,7 +2505,7 @@
                           },
                         {
                             "parametro": "OLDLASTNAME", // "P_OLD_LAST_NAME",
-                            "valor": that.fnCheckTipoConsumidor() ? that.transactionData.Data.CustomerInformation.DocumentNumber  : Session.SessionParams.DATACUSTOMER.DNIRUC
+                            "valor": that.fnCheckTipoConsumidor() ? that.transactionData.Data.CustomerInformation.DocumentNumber : Session.SessionParams.DATACUSTOMER.DNIRUC
                         },
                          {
                              "parametro": "CLAROLOCAL4", // "P_CLAROLOCAL4",
@@ -2279,8 +2525,8 @@
                           },
                     ]
                 },
-                
-                
+
+
                 {
                     "servicio": "RegistroServicioTipificacion",
                     "parametros": [
@@ -2296,7 +2542,7 @@
 
 
 
-                
+
 
 
                 {
@@ -2305,7 +2551,7 @@
 
                         {
                             "parametro": "listaRegistro",
-                            "valor":JSON.stringify (  that.getServiciosTransversal())
+                            "valor": JSON.stringify(that.getServiciosTransversal())
                         },
 
 
@@ -2313,7 +2559,7 @@
                 },
 
 
-                
+
                 {
                     "servicio": "Constancia",
                     "parametros": [
@@ -2412,27 +2658,28 @@
                             "valor": that.transactionData.Configuration.Constants.Constancia_TransaccionDescripcion
                         }
                     ]
-                },			 
-				 {   "servicio": "Trazabilidad",
-				    "parametros": [
-					    {
-					        "parametro": "tipoTransaccion",
-					        "valor": that.transactionData.Configuration.Constants.Constancia_FormatoTransaccion
-					    },
-					    {
-					        "parametro": "tarea",
-					        "valor": "generaConstancia"
-					    },
-					    {
-					        "parametro": "fechaRegistro",
-					        "valor": that.getFechaActual()
-					    },
-					    {
-					        "parametro": "descripcion",
-					        "valor": "Trazabilidad generada desde SIACUNICO"
-					    }
-				    ]
-                }
+                },
+				 {
+				     "servicio": "Trazabilidad",
+				     "parametros": [
+                         {
+                             "parametro": "tipoTransaccion",
+                             "valor": that.transactionData.Configuration.Constants.Constancia_FormatoTransaccion
+                         },
+                         {
+                             "parametro": "tarea",
+                             "valor": "generaConstancia"
+                         },
+                         {
+                             "parametro": "fechaRegistro",
+                             "valor": that.getFechaActual()
+                         },
+                         {
+                             "parametro": "descripcion",
+                             "valor": "Trazabilidad generada desde SIACUNICO"
+                         }
+				     ]
+				 }
             ];
 
 
@@ -2453,30 +2700,33 @@
                     debugger;
                     if (response != null) {
                         if (response.data != null && response.data.MessageResponse != null) {
-                        if (response.succes) {
+                            if (response.succes) {
 
                                 if ((response.data.MessageResponse.Body.codigoRespuesta = ! "0")) {
-                                alert('No se pudo ejecutar la transacción. Informe o vuelva a intentar')
-                            }
-                            else {
+                                    alert('No se pudo ejecutar la transacción. Informe o vuelva a intentar')
+                                }
+                                else {
                                     //var nroSot = response.data.MessageResponse.Body.numeroSOT;
                                     var idInteraccion = response.data.MessageResponse.Body.idInteraccion;
-                                alert('La transacción se ha grabado satisfactoriamente.<br/>');
-                                controls.btnConstancy.show();
-                                controls.btnPrevStep.hide();
-                                controls.btnSave.hide();
-                            }
-                        }
-                        else {
-                            alert('No se pudo ejecutar la transacción. Informe o vuelva a intentar')
-                        }
+                                    alert('La transacción se ha grabado satisfactoriamente.<br/>');
+                                    controls.btnConstancy.show();
+                                    controls.btnPrevStep.hide();
+                                    controls.btnSave.hide();
+                                    that.transactionData.Data.Constancia = !$.string.isEmptyOrNull(response.data.MessageResponse.Body.constancia) ? true : false;
 
-                        sessionStorage.propertyIsEnumerable("dataFull");
-                        sessionStorage.propertyIsEnumerable("dataResponse");
-                        sessionStorage.propertyIsEnumerable("dataRequest");
-                        sessionStorage.setItem("dataFull", JSON.stringify(response));
-                        sessionStorage.setItem("dataResponse", JSON.stringify(response.response));
-                        sessionStorage.setItem("dataRequest", JSON.stringify(response.request));
+
+                                }
+                            }
+                            else {
+                                alert('No se pudo ejecutar la transacción. Informe o vuelva a intentar')
+                            }
+
+                            sessionStorage.propertyIsEnumerable("dataFull");
+                            sessionStorage.propertyIsEnumerable("dataResponse");
+                            sessionStorage.propertyIsEnumerable("dataRequest");
+                            sessionStorage.setItem("dataFull", JSON.stringify(response));
+                            sessionStorage.setItem("dataResponse", JSON.stringify(response.response));
+                            sessionStorage.setItem("dataRequest", JSON.stringify(response.request));
                         }
                         else {
                             alert('No se pudo ejecutar la transacción. Informe o vuelva a intentar')
@@ -2485,7 +2735,7 @@
                     else {
                         alert('No se pudo ejecutar la transacción. Informe o vuelva a intentar')
                     }
-                  
+
                     response = {};
                     $.unblockUI();
                 }
@@ -2494,7 +2744,7 @@
 
 
     },
-     
+
 
         $.fn.AdditionalServices = function () {
             var option = arguments[0],
