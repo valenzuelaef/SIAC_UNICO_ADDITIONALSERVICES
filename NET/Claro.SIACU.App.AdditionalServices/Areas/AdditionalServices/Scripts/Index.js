@@ -1238,6 +1238,12 @@
                                     case 'SERVICIOS ADICIONALES - TELEFONIA FTTH':
                                         imagen = 'ico_phone.svg';
                                         break;
+                                    case 'SERVICIOS ADICIONALES - CABLE FTTH':
+                                        imagen = 'ico_cable.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - INTERNET FTTH':
+                                        imagen = 'ico_cable.svg';
+                                        break;
                                 }
                                 $(rows).eq(i).before(
                                     '<tr id="' + i + '"><td colspan="4" class="info-gestion"><img src="/Content/Images/SUFija/' + imagen + '">' + ServiceType + '</td></tr>'
@@ -1441,6 +1447,12 @@
                                         break;
                                     case 'SERVICIOS ADICIONALES - TELEFONIA FTTH':
                                         imagen = 'ico_phone.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - CABLE FTTH':
+                                        imagen = 'ico_cable.svg';
+                                        break;
+                                    case 'SERVICIOS ADICIONALES - INTERNET FTTH':
+                                        imagen = 'ico_cable.svg';
                                         break;
                                 }
                                 $(rows).eq(i).before(
