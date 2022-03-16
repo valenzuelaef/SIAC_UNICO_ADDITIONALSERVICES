@@ -249,8 +249,10 @@ namespace Claro.SIACU.App.AdditionalServices.Areas.AdditionalServices.Models.Dat
         public string pop2 { get; set; }
         [DataMember(Name = "familia")]
         public string familia { get; set; }
-        //FIN-ContratoPublico-TOBE
         
+        //FIN-ContratoPublico-TOBE
+        [DataMember(Name = "estadoServicio")]
+        public string estadoServicio { get; set; }
     }
 
 

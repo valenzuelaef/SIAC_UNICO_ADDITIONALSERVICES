@@ -141,14 +141,10 @@
                         // Load Customer Information - Left Panel
                         $.app.renderCustomerInformation(that.transactionData);
                         // Load Core Service Information - Left Panel
-                        //debugger;
-                        //if (!$.array.isEmptyOrNull(that.transactionData.Data.CoreServices))
                         $.app.renderCoreServices(that.transactionData);
                         // Load Additional Service Information - Left Panel
-                        //if (!$.array.isEmptyOrNull(that.transactionData.Data.AdditionalServices))
                         $.app.renderAdditionalServices(that.transactionData);
                         // Load Additional Equipment Information - Left Panel
-                        //if (!$.array.isEmptyOrNull(that.transactionData.Data.AdditionalEquipment))
                         $.app.renderAdditionalEquipment(that.transactionData);
 
 
@@ -280,14 +276,15 @@
                     that.lstServiciosDesactivarPreCarga = [];
                     that.lstServiciosActivarPreCarga = [];
                     that.transactionData.Data.FixPlanesServCapanas = (response.data.MessageResponse.Body.servicios.PlanFijaServicioCampana.codigoRespuesta == '0') ? response.data.MessageResponse.Body.servicios.PlanFijaServicioCampana.ListPlanFijaServicio : [];
+                    debugger;
                     if (that.transactionData.Data.FixPlanesServCapanas != []) {
 
                         that.transactionData.Data.FixPlanesServCapanas = that.transactionData.Data.FixPlanesServCapanas
 																		.filter(function (item) {
-																		    return item.ServiceType != 'ALQUILER EQUIPOS IPTV' &&
-                                                                                 item.ServiceType != 'ALQUILER EQUIPOS' &&
-                                                                                 item.poType != 'CARACTERISTICA'
-																		});
+																		    return item.ServiceType.toUpperCase().indexOf('ALQUILER EQUIPOS') <= -1 &&
+                                                                            item.poType.toUpperCase() != 'CARACTERISTICA' &&
+                                                                            item.estadoServicio.toUpperCase() == 'A'
+																		  });
                         debugger;
                         $.each(that.transactionData.Data.FixPlanesServCapanas, function (idx, service) {
                             that.transactionData.Data.FixPlanesServCapanas[idx]["check"] = false;
